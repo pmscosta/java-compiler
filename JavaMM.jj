@@ -1,0 +1,66 @@
+PARSER_BEGIN(JavaMM)
+// código Java que invoca o parser
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+public class JavaMM {
+ public static void main(String args[]) throws ParseException {
+// criação do objecto utilizando o constructor com argumento para
+
+ int size = args.length;
+ String fileName = args[size-1];
+ FileInputStream file;
+
+ try{
+  file = new FileInputStream(fileName);
+  JavaMM parser = new JavaMM(file);
+ parser.ClassDeclaration();
+ }catch(FileNotFoundException e){
+    e.printStackTrace();
+ }
+ System.out.println(fileName);
+
+ 
+ }
+}
+PARSER_END(JavaMM)
+
+
+
+
+
+// símbolos que não devem ser considerados na análise
+SKIP :
+{
+" " | "\t" | "\r" | "\n"
+}
+
+
+// definição dos tokens (símbolos terminais)
+TOKEN :
+{
+< INTEGER : (["0" - "9"])+ >
+| < ARSym : (["+", "-"]) >
+| < CLASS: "class" >
+| < EXTENDS: "extends" >
+| < IDENTIFIER: (["a"-"z", "A"-"Z", "_", "$"])(["a"-"z", "A"-"Z", "_", "$", "0"-"9"])* >
+| < OPENBRACKET: "{" >
+| < CLOSEBRACKET: "}" >
+}
+
+
+// definição da produção
+void Aritm() : {Token t1;}
+{
+t1 = <IDENTIFIER>{ System.out.println("T1 =" + t1.image); } 
+}
+
+void ClassDeclaration() : {}
+{
+    < CLASS > < IDENTIFIER >[< EXTENDS > < IDENTIFIER >] <OPENBRACKET>
+
+
+
+    <CLOSEBRACKET>
+
+}
