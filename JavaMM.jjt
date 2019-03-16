@@ -1,0 +1,195 @@
+options
+{
+    LOOKAHEAD=1;
+}
+
+PARSER_BEGIN(JavaMM)
+// código Java que invoca o parser
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+public
+class JavaMM {
+public
+  static void main(String args[]) throws ParseException {
+    // criação do objecto utilizando o constructor com argumento para
+
+    int size = args.length;
+    String fileName = args[size - 1];
+    FileInputStream file;
+
+    try {
+      file = new FileInputStream(fileName);
+      JavaMM parser = new JavaMM(file);
+      SimpleNode root = parser.ClassDeclaration();
+      root.dump("");
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+  }
+
+/*
+  void Expression_TEST(): {} {
+        <INTEGER_LITERAL> ExpressionLeft()
+    |   <TRUE> ExpressionLeft()
+    |   <FALSE> ExpressionLeft()
+    |   <IDENTIFIER> ExpressionLeft()
+    |   <THIS> ExpressionLeft()
+    |   <NEW> <TYPEINT> <OPENBRACKET> Expression() <CLOSEBRACKET> ExpressionLeft()
+    |   <NEW> <IDENTIFIER> <PARENTHESISOPEN> <PARENTHESISCLOSE> ExpressionLeft()
+    |   <LOGICNOT> Expression() ExpressionLeft()
+    |   <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE> ExpressionLeft()
+    }
+
+    void ExpressionLeft(): {} {
+        Symbol() Expression() ExpressionLeft()
+        | <OPENBRACKET> Expression() <CLOSEBRACKET>
+        | <POINT> <LENGTH> ExpressionLeft()
+        | <POINT> <IDENTIFIER> ExpressionLeft()
+        | Empty()
+    }  */
+
+
+  // luiscubal@fe.up.pt
+}
+
+PARSER_END(JavaMM)
+
+    // símbolos que não devem ser considerados na análise
+    SKIP : {" " | "\t" | "\r" | "\n"}
+
+           // definição dos tokens (símbolos terminais)
+TOKEN : {
+        <   INTEGER : (["0" - "9"])+ >
+        |   < CLASS: "class" >
+        |   < EXTENDS: "extends" >
+        |   < TYPEINT: "int" >
+        |   < TYPESTRING: "String" >
+        |   < TYPEBOOLEAN: "boolean" >
+        |   < PUBLIC: "public" >
+        |   < STATIC: "static" >
+        |   < VOID: "void" >
+        |   < MAIN: "main" >
+        |   < RETURN: "return">
+        |   < IF: "if" >
+        |   < ELSE: "else" >
+        |   < WHILE: "while" >
+        |   < EQUAL: "=" >
+        |   < TRUE: "true">
+        |   < LENGTH: "length">
+        |   < FALSE: "false">
+        |   < THIS: "this">
+        |   < NEW: "new">
+        |   < SMALLERSIGN: "<" >
+        |   < PLUSSIGN: "+">
+        |   < MINUSIGN: "-">
+        |   < TIMESSIGN: "*">
+        |   < DIVIDESIGN: "/">
+        |   < LOGICAND: "&&" >
+        |   < LOGICNOT: "!">
+        |   < OPENCURLYBRACKET: "{" >
+        |   < CLOSECURLYBRACKET: "}" >
+        |   < OPENBRACKET: "[" >
+        |   < CLOSEBRACKET: "]" >
+        |   < SEMICOLON: ";" >
+        |   < PARENTHESISOPEN: "(" >
+        |   < PARENTHESISCLOSE: ")" >
+        |   < COMMA: "," >
+        |   < POINT: "." >
+        |   < INTEGER_LITERAL:  <DECIMAL_LITERAL> (["l","L"])?
+                                | <HEX_LITERAL> (["l","L"])?
+                                | <OCTAL_LITERAL> (["l","L"])? >
+                                | < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* >
+                                | < #HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ >
+                                | < #OCTAL_LITERAL: "0" (["0"-"7"])* >
+        |   < IDENTIFIER: (["a"-"z", "A"-"Z", "_", "$"])(["a"-"z", "A"-"Z", "_", "$", "0"-"9"])* >
+        }
+
+
+SimpleNode ClassDeclaration() : {} {
+    < CLASS > < IDENTIFIER > [< EXTENDS > < IDENTIFIER >] <OPENCURLYBRACKET>
+    
+    ( VarDeclaration() )*
+   // [ MainDeclaration() ]   //FIX ME
+    ( MethodDeclaration() )*
+    
+    <CLOSECURLYBRACKET>
+
+    {return jjtThis;}
+}
+
+void MethodDeclaration() : {} {
+    <PUBLIC> Type() <IDENTIFIER> 
+        <PARENTHESISOPEN>
+            [ Type() <IDENTIFIER> ( <COMMA> Type() <IDENTIFIER> )*]
+        <PARENTHESISCLOSE>
+    <OPENCURLYBRACKET>
+        FunctionBody()
+        <RETURN> Expression() <SEMICOLON>
+    <CLOSECURLYBRACKET>
+}
+
+
+void MainDeclaration() : {} {
+    <PUBLIC> <STATIC> <VOID> <MAIN> 
+        <PARENTHESISOPEN>
+            <TYPESTRING> <OPENBRACKET> <CLOSEBRACKET> <IDENTIFIER>
+        <PARENTHESISCLOSE>
+    <OPENCURLYBRACKET>
+        FunctionBody()
+    <CLOSECURLYBRACKET>
+}
+
+
+void Empty(): {} {
+    {}
+}
+
+void FunctionBody() : {} {
+    (VarDeclaration())*
+    (Statement())*
+}
+
+void Type() : {} {
+    <TYPEBOOLEAN> | <TYPEINT> [<OPENBRACKET> <CLOSEBRACKET>] | <IDENTIFIER>
+}
+
+void VarDeclaration() : {} {
+        Type() <IDENTIFIER> <SEMICOLON>
+}
+
+void Statement() : {} {
+ 
+    <OPENCURLYBRACKET>
+        Statement()
+    <CLOSECURLYBRACKET>
+    |   
+    <IF> <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
+        Statement()
+    <ELSE>
+        Statement()
+    |
+    <WHILE> <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
+        Statement()
+    |
+    Expression() <SEMICOLON>
+    |
+    <IDENTIFIER> FollowIdentifier()
+}
+
+void FollowIdentifier(): {} {
+    <EQUAL> Expression() <SEMICOLON> 
+    |
+    <OPENBRACKET> Expression() <CLOSEBRACKET> <EQUAL> Expression() <SEMICOLON>
+
+}
+
+void Expression() : {}{
+    <PLUSSIGN>
+}
+
+void Symbol(): {} {
+
+    <LOGICAND>|<SMALLERSIGN>|<PLUSSIGN>|<MINUSIGN>|<TIMESSIGN>|<DIVIDESIGN>
+
+}
