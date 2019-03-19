@@ -10,12 +10,11 @@ class Teste extends Pdro {
     int[] a;
     boolean b;
 
-    if (+) {
-
-      +;
+    if (true){
+      a = 1;
     } else {
-      +;
+        b = 1;
     }
-    return +;
+    return 2+3;
   }
 }

@@ -2,6 +2,7 @@
 /*@egen*/options
 {
     LOOKAHEAD=1;
+               
 }
 
 PARSER_BEGIN(JavaMM)
@@ -42,7 +43,12 @@ PARSER_END(JavaMM)
 
            // defini\u00e7\u00e3o dos tokens (s\u00edmbolos terminais)
 TOKEN : {
-        <   INTEGER : (["0" - "9"])+ >
+        <  INTEGER:  <DECIMAL_LITERAL> (["l","L"])?
+                                | <HEX_LITERAL> (["l","L"])?
+                                | <OCTAL_LITERAL> (["l","L"])? >
+                                | < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* >
+                                | < #HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ >
+                                | < #OCTAL_LITERAL: "0" (["0"-"7"])* >
         |   < CLASS: "class" >
         |   < EXTENDS: "extends" >
         |   < TYPEINT: "int" >
@@ -78,18 +84,12 @@ TOKEN : {
         |   < PARENTHESISCLOSE: ")" >
         |   < COMMA: "," >
         |   < POINT: "." >
-        |   < INTEGER_LITERAL:  <DECIMAL_LITERAL> (["l","L"])?
-                                | <HEX_LITERAL> (["l","L"])?
-                                | <OCTAL_LITERAL> (["l","L"])? >
-                                | < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* >
-                                | < #HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ >
-                                | < #OCTAL_LITERAL: "0" (["0"-"7"])* >
         |   < IDENTIFIER: ["a"-"z", "A"-"Z", "_", "$"](["a"-"z", "A"-"Z", "_", "$", "0"-"9"])* >
         }
 
 
 SimpleNode ClassDeclaration() : {/*@bgen(jjtree) ClassDeclaration */
-  SimpleNode jjtn000 = new SimpleNode(JJTCLASSDECLARATION);
+  ASTClassDeclaration jjtn000 = new ASTClassDeclaration(JJTCLASSDECLARATION);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/} {/*@bgen(jjtree) ClassDeclaration */
@@ -132,7 +132,7 @@ SimpleNode ClassDeclaration() : {/*@bgen(jjtree) ClassDeclaration */
 }
 
 void MethodDeclaration() : {/*@bgen(jjtree) MethodDeclaration */
-  SimpleNode jjtn000 = new SimpleNode(JJTMETHODDECLARATION);
+  ASTMethodDeclaration jjtn000 = new ASTMethodDeclaration(JJTMETHODDECLARATION);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/} {/*@bgen(jjtree) MethodDeclaration */
@@ -170,7 +170,7 @@ void MethodDeclaration() : {/*@bgen(jjtree) MethodDeclaration */
 
 
 void MainDeclaration() : {/*@bgen(jjtree) MainDeclaration */
-  SimpleNode jjtn000 = new SimpleNode(JJTMAINDECLARATION);
+  ASTMainDeclaration jjtn000 = new ASTMainDeclaration(JJTMAINDECLARATION);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/} {/*@bgen(jjtree) MainDeclaration */
@@ -207,7 +207,7 @@ void MainDeclaration() : {/*@bgen(jjtree) MainDeclaration */
 
 
 void Empty(): {/*@bgen(jjtree) Empty */
-  SimpleNode jjtn000 = new SimpleNode(JJTEMPTY);
+  ASTEmpty jjtn000 = new ASTEmpty(JJTEMPTY);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/} {/*@bgen(jjtree) Empty */
@@ -228,7 +228,7 @@ void Empty(): {/*@bgen(jjtree) Empty */
 }
 
 void FunctionBody() : {/*@bgen(jjtree) FunctionBody */
-  SimpleNode jjtn000 = new SimpleNode(JJTFUNCTIONBODY);
+  ASTFunctionBody jjtn000 = new ASTFunctionBody(JJTFUNCTIONBODY);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/} {/*@bgen(jjtree) FunctionBody */
@@ -259,23 +259,35 @@ void FunctionBody() : {/*@bgen(jjtree) FunctionBody */
 }
 
 void Type() : {/*@bgen(jjtree) Type */
-  SimpleNode jjtn000 = new SimpleNode(JJTTYPE);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/} {/*@bgen(jjtree) Type */
+               ASTType jjtn000 = new ASTType(JJTTYPE);
+               boolean jjtc000 = true;
+               jjtree.openNodeScope(jjtn000);
+/*@egen*/Token t1;} {/*@bgen(jjtree) Type */
     try {
 /*@egen*/
-    <TYPEBOOLEAN> | <TYPEINT> [<OPENBRACKET> <CLOSEBRACKET>] | <IDENTIFIER>/*@bgen(jjtree)*/
+    <TYPEBOOLEAN>/*@bgen(jjtree)*/
+                  {
+                    jjtree.closeNodeScope(jjtn000, true);
+                    jjtc000 = false;
+                  }
+/*@egen*/ { jjtn000.type = "Boolean"; } 
+    | <TYPEINT> { jjtn000.type = "int"; } [<OPENBRACKET> <CLOSEBRACKET> { jjtn000.type = "int[]"; } ] 
+    | t1 = <IDENTIFIER>/*@bgen(jjtree)*/
+                        {
+                          jjtree.closeNodeScope(jjtn000, true);
+                          jjtc000 = false;
+                        }
+/*@egen*/ { jjtn000.type = t1.image; }/*@bgen(jjtree)*/
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
       }
     }
-/*@egen*/
+/*@egen*/ 
 }
 
 void VarDeclaration() : {/*@bgen(jjtree) VarDeclaration */
-  SimpleNode jjtn000 = new SimpleNode(JJTVARDECLARATION);
+  ASTVarDeclaration jjtn000 = new ASTVarDeclaration(JJTVARDECLARATION);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/} {/*@bgen(jjtree) VarDeclaration */
@@ -305,7 +317,7 @@ void VarDeclaration() : {/*@bgen(jjtree) VarDeclaration */
 }
 
 void Statement() : {/*@bgen(jjtree) Statement */
-  SimpleNode jjtn000 = new SimpleNode(JJTSTATEMENT);
+  ASTStatement jjtn000 = new ASTStatement(JJTSTATEMENT);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/} {/*@bgen(jjtree) Statement */
@@ -324,6 +336,7 @@ void Statement() : {/*@bgen(jjtree) Statement */
     <WHILE> <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
         Statement()
     |
+    LOOKAHEAD(Expression() <SEMICOLON>)
     Expression() <SEMICOLON>
     |
     <IDENTIFIER> FollowIdentifier()/*@bgen(jjtree)*/
@@ -350,7 +363,7 @@ void Statement() : {/*@bgen(jjtree) Statement */
 }
 
 void FollowIdentifier(): {/*@bgen(jjtree) FollowIdentifier */
-  SimpleNode jjtn000 = new SimpleNode(JJTFOLLOWIDENTIFIER);
+  ASTFollowIdentifier jjtn000 = new ASTFollowIdentifier(JJTFOLLOWIDENTIFIER);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/} {/*@bgen(jjtree) FollowIdentifier */
@@ -384,7 +397,7 @@ void FollowIdentifier(): {/*@bgen(jjtree) FollowIdentifier */
 
 
 void Symbol(): {/*@bgen(jjtree) Symbol */
-  SimpleNode jjtn000 = new SimpleNode(JJTSYMBOL);
+  ASTSymbol jjtn000 = new ASTSymbol(JJTSYMBOL);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/} {/*@bgen(jjtree) Symbol */
@@ -402,19 +415,19 @@ void Symbol(): {/*@bgen(jjtree) Symbol */
 }
 
 void Expression(): {/*@bgen(jjtree) Expression */
-  SimpleNode jjtn000 = new SimpleNode(JJTEXPRESSION);
+  ASTExpression jjtn000 = new ASTExpression(JJTEXPRESSION);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/} 
 {/*@bgen(jjtree) Expression */
     try {
 /*@egen*/
-    <INTEGER_LITERAL> ExpressionLeft()
+    <INTEGER> ExpressionLeft()
 |   <TRUE> ExpressionLeft()
 |   <FALSE> ExpressionLeft()
 |   <IDENTIFIER> ExpressionLeft()
 |   <THIS> ExpressionLeft()
-|   <NEW> <TYPEINT> <OPENBRACKET> Expression() <CLOSEBRACKET> ExpressionLeft()
+|   LOOKAHEAD(2) <NEW> <TYPEINT> <OPENBRACKET> Expression() <CLOSEBRACKET> ExpressionLeft()
 |   <NEW> <IDENTIFIER> <PARENTHESISOPEN> <PARENTHESISCLOSE> ExpressionLeft()
 |   <LOGICNOT> Expression() ExpressionLeft()
 |   <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE> ExpressionLeft()/*@bgen(jjtree)*/
@@ -442,7 +455,7 @@ void Expression(): {/*@bgen(jjtree) Expression */
 }
 
 void ExpressionLeft(): {/*@bgen(jjtree) ExpressionLeft */
-  SimpleNode jjtn000 = new SimpleNode(JJTEXPRESSIONLEFT);
+  ASTExpressionLeft jjtn000 = new ASTExpressionLeft(JJTEXPRESSIONLEFT);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/}
@@ -451,7 +464,7 @@ void ExpressionLeft(): {/*@bgen(jjtree) ExpressionLeft */
 /*@egen*/
     Symbol() Expression() ExpressionLeft()
     | <OPENBRACKET> Expression() <CLOSEBRACKET>
-    | <POINT> <LENGTH> ExpressionLeft()
+    | LOOKAHEAD(2) <POINT> <LENGTH> ExpressionLeft()
     | <POINT> <IDENTIFIER> ExpressionLeft()
     | Empty()/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {

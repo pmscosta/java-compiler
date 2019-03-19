@@ -25,7 +25,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static final public SimpleNode ClassDeclaration() throws ParseException {
                                  /*@bgen(jjtree) ClassDeclaration */
-  SimpleNode jjtn000 = new SimpleNode(JJTCLASSDECLARATION);
+  ASTClassDeclaration jjtn000 = new ASTClassDeclaration(JJTCLASSDECLARATION);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
@@ -95,7 +95,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static final public void MethodDeclaration() throws ParseException {
                             /*@bgen(jjtree) MethodDeclaration */
-  SimpleNode jjtn000 = new SimpleNode(JJTMETHODDECLARATION);
+  ASTMethodDeclaration jjtn000 = new ASTMethodDeclaration(JJTMETHODDECLARATION);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
@@ -158,7 +158,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static final public void MainDeclaration() throws ParseException {
                           /*@bgen(jjtree) MainDeclaration */
-  SimpleNode jjtn000 = new SimpleNode(JJTMAINDECLARATION);
+  ASTMainDeclaration jjtn000 = new ASTMainDeclaration(JJTMAINDECLARATION);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
@@ -198,7 +198,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static final public void Empty() throws ParseException {
                /*@bgen(jjtree) Empty */
-  SimpleNode jjtn000 = new SimpleNode(JJTEMPTY);
+  ASTEmpty jjtn000 = new ASTEmpty(JJTEMPTY);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
@@ -214,7 +214,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static final public void FunctionBody() throws ParseException {
                        /*@bgen(jjtree) FunctionBody */
-  SimpleNode jjtn000 = new SimpleNode(JJTFUNCTIONBODY);
+  ASTFunctionBody jjtn000 = new ASTFunctionBody(JJTFUNCTIONBODY);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
@@ -230,6 +230,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
       label_5:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case INTEGER:
         case IF:
         case WHILE:
         case TRUE:
@@ -239,7 +240,6 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
         case LOGICNOT:
         case OPENCURLYBRACKET:
         case PARENTHESISOPEN:
-        case INTEGER_LITERAL:
         case IDENTIFIER:
           ;
           break;
@@ -272,20 +272,25 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static final public void Type() throws ParseException {
                /*@bgen(jjtree) Type */
-  SimpleNode jjtn000 = new SimpleNode(JJTTYPE);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
+               ASTType jjtn000 = new ASTType(JJTTYPE);
+               boolean jjtc000 = true;
+               jjtree.openNodeScope(jjtn000);Token t1;
     try {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case TYPEBOOLEAN:
         jj_consume_token(TYPEBOOLEAN);
+                    jjtree.closeNodeScope(jjtn000, true);
+                    jjtc000 = false;
+                    jjtn000.type = "Boolean";
         break;
       case TYPEINT:
         jj_consume_token(TYPEINT);
+                  jjtn000.type = "int";
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case OPENBRACKET:
           jj_consume_token(OPENBRACKET);
           jj_consume_token(CLOSEBRACKET);
+                                                                          jjtn000.type = "int[]";
           break;
         default:
           jj_la1[6] = jj_gen;
@@ -293,7 +298,10 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
         }
         break;
       case IDENTIFIER:
-        jj_consume_token(IDENTIFIER);
+        t1 = jj_consume_token(IDENTIFIER);
+                          jjtree.closeNodeScope(jjtn000, true);
+                          jjtc000 = false;
+                          jjtn000.type = t1.image;
         break;
       default:
         jj_la1[7] = jj_gen;
@@ -309,7 +317,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static final public void VarDeclaration() throws ParseException {
                          /*@bgen(jjtree) VarDeclaration */
-  SimpleNode jjtn000 = new SimpleNode(JJTVARDECLARATION);
+  ASTVarDeclaration jjtn000 = new ASTVarDeclaration(JJTVARDECLARATION);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
@@ -339,7 +347,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static final public void Statement() throws ParseException {
                     /*@bgen(jjtree) Statement */
-  SimpleNode jjtn000 = new SimpleNode(JJTSTATEMENT);
+  ASTStatement jjtn000 = new ASTStatement(JJTSTATEMENT);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
@@ -365,24 +373,23 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
         jj_consume_token(PARENTHESISCLOSE);
         Statement();
         break;
-      case TRUE:
-      case FALSE:
-      case THIS:
-      case NEW:
-      case LOGICNOT:
-      case PARENTHESISOPEN:
-      case INTEGER_LITERAL:
-      case IDENTIFIER:
-        Expression();
-        jj_consume_token(SEMICOLON);
-        break;
-        jj_consume_token(IDENTIFIER);
-        FollowIdentifier();
-        break;
       default:
         jj_la1[8] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+        if (jj_2_2(2147483647)) {
+          Expression();
+          jj_consume_token(SEMICOLON);
+        } else {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case IDENTIFIER:
+            jj_consume_token(IDENTIFIER);
+            FollowIdentifier();
+            break;
+          default:
+            jj_la1[9] = jj_gen;
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        }
       }
     } catch (Throwable jjte000) {
       if (jjtc000) {
@@ -407,7 +414,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static final public void FollowIdentifier() throws ParseException {
                           /*@bgen(jjtree) FollowIdentifier */
-  SimpleNode jjtn000 = new SimpleNode(JJTFOLLOWIDENTIFIER);
+  ASTFollowIdentifier jjtn000 = new ASTFollowIdentifier(JJTFOLLOWIDENTIFIER);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
@@ -426,7 +433,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
         jj_consume_token(SEMICOLON);
         break;
       default:
-        jj_la1[9] = jj_gen;
+        jj_la1[10] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -453,7 +460,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static final public void Symbol() throws ParseException {
                 /*@bgen(jjtree) Symbol */
-  SimpleNode jjtn000 = new SimpleNode(JJTSYMBOL);
+  ASTSymbol jjtn000 = new ASTSymbol(JJTSYMBOL);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
@@ -477,7 +484,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
         jj_consume_token(DIVIDESIGN);
         break;
       default:
-        jj_la1[10] = jj_gen;
+        jj_la1[11] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -490,13 +497,13 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static final public void Expression() throws ParseException {
                     /*@bgen(jjtree) Expression */
-  SimpleNode jjtn000 = new SimpleNode(JJTEXPRESSION);
+  ASTExpression jjtn000 = new ASTExpression(JJTEXPRESSION);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case INTEGER_LITERAL:
-        jj_consume_token(INTEGER_LITERAL);
+      case INTEGER:
+        jj_consume_token(INTEGER);
         ExpressionLeft();
         break;
       case TRUE:
@@ -515,35 +522,41 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
         jj_consume_token(THIS);
         ExpressionLeft();
         break;
-      case NEW:
-        jj_consume_token(NEW);
-        jj_consume_token(TYPEINT);
-        jj_consume_token(OPENBRACKET);
-        Expression();
-        jj_consume_token(CLOSEBRACKET);
-        ExpressionLeft();
-        break;
-        jj_consume_token(NEW);
-        jj_consume_token(IDENTIFIER);
-        jj_consume_token(PARENTHESISOPEN);
-        jj_consume_token(PARENTHESISCLOSE);
-        ExpressionLeft();
-        break;
-      case LOGICNOT:
-        jj_consume_token(LOGICNOT);
-        Expression();
-        ExpressionLeft();
-        break;
-      case PARENTHESISOPEN:
-        jj_consume_token(PARENTHESISOPEN);
-        Expression();
-        jj_consume_token(PARENTHESISCLOSE);
-        ExpressionLeft();
-        break;
       default:
-        jj_la1[11] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+        jj_la1[12] = jj_gen;
+        if (jj_2_3(2)) {
+          jj_consume_token(NEW);
+          jj_consume_token(TYPEINT);
+          jj_consume_token(OPENBRACKET);
+          Expression();
+          jj_consume_token(CLOSEBRACKET);
+          ExpressionLeft();
+        } else {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case NEW:
+            jj_consume_token(NEW);
+            jj_consume_token(IDENTIFIER);
+            jj_consume_token(PARENTHESISOPEN);
+            jj_consume_token(PARENTHESISCLOSE);
+            ExpressionLeft();
+            break;
+          case LOGICNOT:
+            jj_consume_token(LOGICNOT);
+            Expression();
+            ExpressionLeft();
+            break;
+          case PARENTHESISOPEN:
+            jj_consume_token(PARENTHESISOPEN);
+            Expression();
+            jj_consume_token(PARENTHESISCLOSE);
+            ExpressionLeft();
+            break;
+          default:
+            jj_la1[13] = jj_gen;
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        }
       }
     } catch (Throwable jjte000) {
       if (jjtc000) {
@@ -568,7 +581,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static final public void ExpressionLeft() throws ParseException {
                         /*@bgen(jjtree) ExpressionLeft */
-  SimpleNode jjtn000 = new SimpleNode(JJTEXPRESSIONLEFT);
+  ASTExpressionLeft jjtn000 = new ASTExpressionLeft(JJTEXPRESSIONLEFT);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
@@ -588,18 +601,24 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
         Expression();
         jj_consume_token(CLOSEBRACKET);
         break;
-      case POINT:
-        jj_consume_token(POINT);
-        jj_consume_token(LENGTH);
-        ExpressionLeft();
-        break;
-        jj_consume_token(POINT);
-        jj_consume_token(IDENTIFIER);
-        ExpressionLeft();
-        break;
       default:
-        jj_la1[12] = jj_gen;
-        Empty();
+        jj_la1[14] = jj_gen;
+        if (jj_2_4(2)) {
+          jj_consume_token(POINT);
+          jj_consume_token(LENGTH);
+          ExpressionLeft();
+        } else {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case POINT:
+            jj_consume_token(POINT);
+            jj_consume_token(IDENTIFIER);
+            ExpressionLeft();
+            break;
+          default:
+            jj_la1[15] = jj_gen;
+            Empty();
+          }
+        }
       }
     } catch (Throwable jjte000) {
       if (jjtc000) {
@@ -629,40 +648,250 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     finally { jj_save(0, xla); }
   }
 
-  static private boolean jj_3R_9() {
+  static private boolean jj_2_2(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_2(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(1, xla); }
+  }
+
+  static private boolean jj_2_3(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_3(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(2, xla); }
+  }
+
+  static private boolean jj_2_4(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_4(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(3, xla); }
+  }
+
+  static private boolean jj_3R_18() {
+    if (jj_scan_token(TYPEINT)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_21()) jj_scanpos = xsp;
+    return false;
+  }
+
+  static private boolean jj_3_3() {
+    if (jj_scan_token(NEW)) return true;
+    if (jj_scan_token(TYPEINT)) return true;
     if (jj_scan_token(OPENBRACKET)) return true;
+    if (jj_3R_7()) return true;
+    if (jj_scan_token(CLOSEBRACKET)) return true;
+    if (jj_3R_20()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_13() {
+    if (jj_scan_token(THIS)) return true;
+    if (jj_3R_20()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_12() {
+    if (jj_scan_token(IDENTIFIER)) return true;
+    if (jj_3R_20()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_11() {
+    if (jj_scan_token(FALSE)) return true;
+    if (jj_3R_20()) return true;
     return false;
   }
 
   static private boolean jj_3R_8() {
-    if (jj_scan_token(TYPEINT)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_9()) jj_scanpos = xsp;
+    if (jj_3R_17()) {
+    jj_scanpos = xsp;
+    if (jj_3R_18()) {
+    jj_scanpos = xsp;
+    if (jj_3R_19()) return true;
+    }
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_17() {
+    if (jj_scan_token(TYPEBOOLEAN)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_10() {
+    if (jj_scan_token(TRUE)) return true;
+    if (jj_3R_20()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_9() {
+    if (jj_scan_token(INTEGER)) return true;
+    if (jj_3R_20()) return true;
     return false;
   }
 
   static private boolean jj_3R_7() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(10)) {
+    if (jj_3R_9()) {
     jj_scanpos = xsp;
-    if (jj_3R_8()) {
+    if (jj_3R_10()) {
     jj_scanpos = xsp;
-    if (jj_scan_token(45)) return true;
+    if (jj_3R_11()) {
+    jj_scanpos = xsp;
+    if (jj_3R_12()) {
+    jj_scanpos = xsp;
+    if (jj_3R_13()) {
+    jj_scanpos = xsp;
+    if (jj_3_3()) {
+    jj_scanpos = xsp;
+    if (jj_3R_14()) {
+    jj_scanpos = xsp;
+    if (jj_3R_15()) {
+    jj_scanpos = xsp;
+    if (jj_3R_16()) return true;
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  static private boolean jj_3_1() {
+    if (jj_3R_6()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_21() {
+    if (jj_scan_token(OPENBRACKET)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_27() {
+    return false;
+  }
+
+  static private boolean jj_3R_26() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(33)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(28)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(29)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(30)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(31)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(32)) return true;
+    }
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  static private boolean jj_3_2() {
+    if (jj_3R_7()) return true;
+    if (jj_scan_token(SEMICOLON)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_25() {
+    if (jj_3R_27()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_24() {
+    if (jj_scan_token(POINT)) return true;
+    if (jj_scan_token(IDENTIFIER)) return true;
+    if (jj_3R_20()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_4() {
+    if (jj_scan_token(POINT)) return true;
+    if (jj_scan_token(LENGTH)) return true;
+    if (jj_3R_20()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_23() {
+    if (jj_scan_token(OPENBRACKET)) return true;
+    if (jj_3R_7()) return true;
+    if (jj_scan_token(CLOSEBRACKET)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_22() {
+    if (jj_3R_26()) return true;
+    if (jj_3R_7()) return true;
+    if (jj_3R_20()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_20() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_22()) {
+    jj_scanpos = xsp;
+    if (jj_3R_23()) {
+    jj_scanpos = xsp;
+    if (jj_3_4()) {
+    jj_scanpos = xsp;
+    if (jj_3R_24()) {
+    jj_scanpos = xsp;
+    if (jj_3R_25()) return true;
+    }
+    }
     }
     }
     return false;
   }
 
   static private boolean jj_3R_6() {
-    if (jj_3R_7()) return true;
+    if (jj_3R_8()) return true;
     if (jj_scan_token(IDENTIFIER)) return true;
     return false;
   }
 
-  static private boolean jj_3_1() {
-    if (jj_3R_6()) return true;
+  static private boolean jj_3R_16() {
+    if (jj_scan_token(PARENTHESISOPEN)) return true;
+    if (jj_3R_7()) return true;
+    if (jj_scan_token(PARENTHESISCLOSE)) return true;
+    if (jj_3R_20()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_15() {
+    if (jj_scan_token(LOGICNOT)) return true;
+    if (jj_3R_7()) return true;
+    if (jj_3R_20()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_19() {
+    if (jj_scan_token(IDENTIFIER)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_14() {
+    if (jj_scan_token(NEW)) return true;
+    if (jj_scan_token(IDENTIFIER)) return true;
+    if (jj_scan_token(PARENTHESISOPEN)) return true;
+    if (jj_scan_token(PARENTHESISCLOSE)) return true;
+    if (jj_3R_20()) return true;
     return false;
   }
 
@@ -678,7 +907,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
   static private Token jj_scanpos, jj_lastpos;
   static private int jj_la;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[13];
+  static final private int[] jj_la1 = new int[16];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static {
@@ -686,12 +915,12 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x80,0x500,0x800,0x0,0x500,0x81d50000,0x0,0x500,0x81d50000,0x80000,0x7e000000,0x81d00000,0x7e000000,};
+      jj_la1_0 = new int[] {0x400,0x2800,0x4000,0x0,0x2800,0xea80020,0x0,0x2800,0x280000,0x0,0x400000,0xf0000000,0x6800020,0x8000000,0xf0000000,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x0,0x2000,0x0,0x80,0x2000,0x2221,0x4,0x2000,0x2221,0x4,0x0,0x2220,0x104,};
+      jj_la1_1 = new int[] {0x0,0x1000,0x0,0x400,0x1000,0x110c,0x20,0x1000,0x8,0x1000,0x20,0x3,0x1000,0x104,0x23,0x800,};
    }
-  static final private JJCalls[] jj_2_rtns = new JJCalls[1];
+  static final private JJCalls[] jj_2_rtns = new JJCalls[4];
   static private boolean jj_rescan = false;
   static private int jj_gc = 0;
 
@@ -713,7 +942,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 13; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -729,7 +958,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 13; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -747,7 +976,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 13; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -759,7 +988,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 13; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -776,7 +1005,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 13; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -787,7 +1016,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 13; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -902,12 +1131,12 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[46];
+    boolean[] la1tokens = new boolean[45];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 13; i++) {
+    for (int i = 0; i < 16; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -919,7 +1148,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
         }
       }
     }
-    for (int i = 0; i < 46; i++) {
+    for (int i = 0; i < 45; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
@@ -946,7 +1175,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 4; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -954,6 +1183,9 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
           jj_la = p.arg; jj_lastpos = jj_scanpos = p.first;
           switch (i) {
             case 0: jj_3_1(); break;
+            case 1: jj_3_2(); break;
+            case 2: jj_3_3(); break;
+            case 3: jj_3_4(); break;
           }
         }
         p = p.next;
