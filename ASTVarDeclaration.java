@@ -2,12 +2,19 @@
 /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=false,TRACK_TOKENS=false,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 public
 class ASTVarDeclaration extends SimpleNode {
+
+  public String name = null;
+
   public ASTVarDeclaration(int id) {
     super(id);
   }
 
   public ASTVarDeclaration(JavaMM p, int id) {
     super(p, id);
+  }
+
+  public String toString(){
+    return name;
   }
 
 }

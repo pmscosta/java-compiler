@@ -84,8 +84,8 @@ TOKEN : {
         }
 
 
-SimpleNode ClassDeclaration() : {} {
-    < CLASS > < IDENTIFIER > [< EXTENDS > < IDENTIFIER >] <OPENCURLYBRACKET>
+SimpleNode ClassDeclaration() : {Token t1;} {
+    < CLASS > t1=< IDENTIFIER >{jjtThis.name=t1.image;} [< EXTENDS > < IDENTIFIER >] <OPENCURLYBRACKET>
     
     ( VarDeclaration() )*
    // [ MainDeclaration() ]   //FIX ME
@@ -96,8 +96,8 @@ SimpleNode ClassDeclaration() : {} {
     {return jjtThis;}
 }
 
-void MethodDeclaration() : {} {
-    <PUBLIC> Type() <IDENTIFIER> 
+void MethodDeclaration() : {Token t1;} {
+    <PUBLIC> Type() t1 = <IDENTIFIER> {jjtThis.name = t1.image;} 
         <PARENTHESISOPEN>
             [ Type() <IDENTIFIER> ( <COMMA> Type() <IDENTIFIER> )*]
         <PARENTHESISCLOSE>
@@ -134,8 +134,9 @@ void Type() : {Token t1;} {
     | t1 = <IDENTIFIER> { jjtThis.type = t1.image; } 
 }
 
-void VarDeclaration() : {} {
-        Type() <IDENTIFIER> <SEMICOLON>
+void VarDeclaration() : {Token t1;} {
+        Type() t1=<IDENTIFIER>{jjtThis.name = t1.image;} <SEMICOLON>
+
 }
 
 void Statement() : {} {

@@ -89,13 +89,13 @@ TOKEN : {
 
 
 SimpleNode ClassDeclaration() : {/*@bgen(jjtree) ClassDeclaration */
-  ASTClassDeclaration jjtn000 = new ASTClassDeclaration(JJTCLASSDECLARATION);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/} {/*@bgen(jjtree) ClassDeclaration */
+                                 ASTClassDeclaration jjtn000 = new ASTClassDeclaration(JJTCLASSDECLARATION);
+                                 boolean jjtc000 = true;
+                                 jjtree.openNodeScope(jjtn000);
+/*@egen*/Token t1;} {/*@bgen(jjtree) ClassDeclaration */
     try {
 /*@egen*/
-    < CLASS > < IDENTIFIER > [< EXTENDS > < IDENTIFIER >] <OPENCURLYBRACKET>
+    < CLASS > t1=< IDENTIFIER >{jjtn000.name=t1.image;} [< EXTENDS > < IDENTIFIER >] <OPENCURLYBRACKET>
     
     ( VarDeclaration() )*
    // [ MainDeclaration() ]   //FIX ME
@@ -132,13 +132,13 @@ SimpleNode ClassDeclaration() : {/*@bgen(jjtree) ClassDeclaration */
 }
 
 void MethodDeclaration() : {/*@bgen(jjtree) MethodDeclaration */
-  ASTMethodDeclaration jjtn000 = new ASTMethodDeclaration(JJTMETHODDECLARATION);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/} {/*@bgen(jjtree) MethodDeclaration */
+                            ASTMethodDeclaration jjtn000 = new ASTMethodDeclaration(JJTMETHODDECLARATION);
+                            boolean jjtc000 = true;
+                            jjtree.openNodeScope(jjtn000);
+/*@egen*/Token t1;} {/*@bgen(jjtree) MethodDeclaration */
     try {
 /*@egen*/
-    <PUBLIC> Type() <IDENTIFIER> 
+    <PUBLIC> Type() t1 = <IDENTIFIER> {jjtn000.name = t1.image;} 
         <PARENTHESISOPEN>
             [ Type() <IDENTIFIER> ( <COMMA> Type() <IDENTIFIER> )*]
         <PARENTHESISCLOSE>
@@ -287,13 +287,13 @@ void Type() : {/*@bgen(jjtree) Type */
 }
 
 void VarDeclaration() : {/*@bgen(jjtree) VarDeclaration */
-  ASTVarDeclaration jjtn000 = new ASTVarDeclaration(JJTVARDECLARATION);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/} {/*@bgen(jjtree) VarDeclaration */
+                         ASTVarDeclaration jjtn000 = new ASTVarDeclaration(JJTVARDECLARATION);
+                         boolean jjtc000 = true;
+                         jjtree.openNodeScope(jjtn000);
+/*@egen*/Token t1;} {/*@bgen(jjtree) VarDeclaration */
         try {
 /*@egen*/
-        Type() <IDENTIFIER> <SEMICOLON>/*@bgen(jjtree)*/
+        Type() t1=<IDENTIFIER>{jjtn000.name = t1.image;} <SEMICOLON>/*@bgen(jjtree)*/
         } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
@@ -314,6 +314,7 @@ void VarDeclaration() : {/*@bgen(jjtree) VarDeclaration */
           }
         }
 /*@egen*/
+
 }
 
 void Statement() : {/*@bgen(jjtree) Statement */

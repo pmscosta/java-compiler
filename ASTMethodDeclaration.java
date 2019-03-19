@@ -2,6 +2,9 @@
 /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=false,TRACK_TOKENS=false,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 public
 class ASTMethodDeclaration extends SimpleNode {
+
+  public String name = null;
+  
   public ASTMethodDeclaration(int id) {
     super(id);
   }
@@ -9,6 +12,11 @@ class ASTMethodDeclaration extends SimpleNode {
   public ASTMethodDeclaration(JavaMM p, int id) {
     super(p, id);
   }
+
+  public String toString(){
+    return name;
+  }
+
 
 }
 /* JavaCC - OriginalChecksum=0296094a3c8f47d71b338da1f9c4ba54 (do not edit this line) */

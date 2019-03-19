@@ -1,4 +1,4 @@
-class Teste extends Pdro {
+class ClasseTeste extends Pdro {
 
   int[] arr;
   boolean array;
@@ -6,7 +6,7 @@ class Teste extends Pdro {
   Pedro array;
   boolean array;
 
-  public int pedro(int a, boolean b) {
+  public int FuncaoTeste(int a, boolean b) {
     int[] a;
     boolean b;
 

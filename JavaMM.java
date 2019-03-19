@@ -25,12 +25,13 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static final public SimpleNode ClassDeclaration() throws ParseException {
                                  /*@bgen(jjtree) ClassDeclaration */
-  ASTClassDeclaration jjtn000 = new ASTClassDeclaration(JJTCLASSDECLARATION);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
+                                 ASTClassDeclaration jjtn000 = new ASTClassDeclaration(JJTCLASSDECLARATION);
+                                 boolean jjtc000 = true;
+                                 jjtree.openNodeScope(jjtn000);Token t1;
     try {
       jj_consume_token(CLASS);
-      jj_consume_token(IDENTIFIER);
+      t1 = jj_consume_token(IDENTIFIER);
+                                jjtn000.name=t1.image;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case EXTENDS:
         jj_consume_token(EXTENDS);
@@ -95,13 +96,14 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static final public void MethodDeclaration() throws ParseException {
                             /*@bgen(jjtree) MethodDeclaration */
-  ASTMethodDeclaration jjtn000 = new ASTMethodDeclaration(JJTMETHODDECLARATION);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
+                            ASTMethodDeclaration jjtn000 = new ASTMethodDeclaration(JJTMETHODDECLARATION);
+                            boolean jjtc000 = true;
+                            jjtree.openNodeScope(jjtn000);Token t1;
     try {
       jj_consume_token(PUBLIC);
       Type();
-      jj_consume_token(IDENTIFIER);
+      t1 = jj_consume_token(IDENTIFIER);
+                                       jjtn000.name = t1.image;
       jj_consume_token(PARENTHESISOPEN);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case TYPEINT:
@@ -317,12 +319,13 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static final public void VarDeclaration() throws ParseException {
                          /*@bgen(jjtree) VarDeclaration */
-  ASTVarDeclaration jjtn000 = new ASTVarDeclaration(JJTVARDECLARATION);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
+                         ASTVarDeclaration jjtn000 = new ASTVarDeclaration(JJTVARDECLARATION);
+                         boolean jjtc000 = true;
+                         jjtree.openNodeScope(jjtn000);Token t1;
     try {
       Type();
-      jj_consume_token(IDENTIFIER);
+      t1 = jj_consume_token(IDENTIFIER);
+                               jjtn000.name = t1.image;
       jj_consume_token(SEMICOLON);
     } catch (Throwable jjte000) {
           if (jjtc000) {
@@ -677,16 +680,6 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     return false;
   }
 
-  static private boolean jj_3_3() {
-    if (jj_scan_token(NEW)) return true;
-    if (jj_scan_token(TYPEINT)) return true;
-    if (jj_scan_token(OPENBRACKET)) return true;
-    if (jj_3R_7()) return true;
-    if (jj_scan_token(CLOSEBRACKET)) return true;
-    if (jj_3R_20()) return true;
-    return false;
-  }
-
   static private boolean jj_3R_13() {
     if (jj_scan_token(THIS)) return true;
     if (jj_3R_20()) return true;
@@ -701,6 +694,12 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static private boolean jj_3R_11() {
     if (jj_scan_token(FALSE)) return true;
+    if (jj_3R_20()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_10() {
+    if (jj_scan_token(TRUE)) return true;
     if (jj_3R_20()) return true;
     return false;
   }
@@ -720,12 +719,6 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static private boolean jj_3R_17() {
     if (jj_scan_token(TYPEBOOLEAN)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_10() {
-    if (jj_scan_token(TRUE)) return true;
-    if (jj_3R_20()) return true;
     return false;
   }
 
@@ -776,10 +769,6 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     return false;
   }
 
-  static private boolean jj_3R_27() {
-    return false;
-  }
-
   static private boolean jj_3R_26() {
     Token xsp;
     xsp = jj_scanpos;
@@ -799,6 +788,10 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     }
     }
     }
+    return false;
+  }
+
+  static private boolean jj_3R_27() {
     return false;
   }
 
@@ -881,16 +874,26 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     return false;
   }
 
-  static private boolean jj_3R_19() {
-    if (jj_scan_token(IDENTIFIER)) return true;
-    return false;
-  }
-
   static private boolean jj_3R_14() {
     if (jj_scan_token(NEW)) return true;
     if (jj_scan_token(IDENTIFIER)) return true;
     if (jj_scan_token(PARENTHESISOPEN)) return true;
     if (jj_scan_token(PARENTHESISCLOSE)) return true;
+    if (jj_3R_20()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_19() {
+    if (jj_scan_token(IDENTIFIER)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_3() {
+    if (jj_scan_token(NEW)) return true;
+    if (jj_scan_token(TYPEINT)) return true;
+    if (jj_scan_token(OPENBRACKET)) return true;
+    if (jj_3R_7()) return true;
+    if (jj_scan_token(CLOSEBRACKET)) return true;
     if (jj_3R_20()) return true;
     return false;
   }
