@@ -156,18 +156,23 @@ void Statement() : {} {
     LOOKAHEAD(Expression() <SEMICOLON>)
     Expression() <SEMICOLON>
     |
-    <IDENTIFIER> FollowIdentifier()
+    <IDENTIFIER> Assignment()
 }
 
-void FollowIdentifier(): {} {
-    <EQUAL> Expression() <SEMICOLON> 
-    |
-    <OPENBRACKET> Expression() <CLOSEBRACKET> <EQUAL> Expression() <SEMICOLON>
+void Assignment(): {} {
+    (PositionAccess())? AssignmentLeft()
+}
 
+void PositionAccess() : {} {
+    <OPENBRACKET> Expression() <CLOSEBRACKET>
+}
+
+void AssignmentLeft(): {} {
+    <EQUAL> Expression() <SEMICOLON>
 }
 
 
-void Symbol(): {} {
+void Operator(): {} {
 
     <LOGICAND>|<SMALLERSIGN>|<PLUSSIGN>|<MINUSIGN>|<TIMESSIGN>|<DIVIDESIGN>
 
@@ -180,18 +185,27 @@ void Expression(): {}
 |   <FALSE> ExpressionLeft()
 |   <IDENTIFIER> ExpressionLeft()
 |   <THIS> ExpressionLeft()
-|   LOOKAHEAD(2) <NEW> <TYPEINT> <OPENBRACKET> Expression() <CLOSEBRACKET> ExpressionLeft()
-|   <NEW> <IDENTIFIER> <PARENTHESISOPEN> <PARENTHESISCLOSE> ExpressionLeft()
+|   <NEW> NewObject()
 |   <LOGICNOT> Expression() ExpressionLeft()
 |   <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE> ExpressionLeft()
 
 }
 
+void NewObject(): {} {
+
+    <TYPEINT> <OPENBRACKET> Expression() <CLOSEBRACKET> ExpressionLeft()
+    | <IDENTIFIER> <PARENTHESISOPEN> <PARENTHESISCLOSE> ExpressionLeft()
+}
+
+void ObjectAttr(): {} {
+    <LENGTH> ExpressionLeft()
+    | <IDENTIFIER> ExpressionLeft()
+}
+
 void ExpressionLeft(): {}
 {
-    Symbol() Expression() ExpressionLeft()
-    | <OPENBRACKET> Expression() <CLOSEBRACKET>
-    | LOOKAHEAD(2) <POINT> <LENGTH> ExpressionLeft()
-    | <POINT> <IDENTIFIER> ExpressionLeft()
+    Operator() Expression() ExpressionLeft()
+    | PositionAccess()
+    | <POINT> ObjectAttr()
     | Empty()
 } 

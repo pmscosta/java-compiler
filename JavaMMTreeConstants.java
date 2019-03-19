@@ -9,10 +9,14 @@ public interface JavaMMTreeConstants
   public int JJTTYPE = 5;
   public int JJTVARDECLARATION = 6;
   public int JJTSTATEMENT = 7;
-  public int JJTFOLLOWIDENTIFIER = 8;
-  public int JJTSYMBOL = 9;
-  public int JJTEXPRESSION = 10;
-  public int JJTEXPRESSIONLEFT = 11;
+  public int JJTASSIGNMENT = 8;
+  public int JJTPOSITIONACCESS = 9;
+  public int JJTASSIGNMENTLEFT = 10;
+  public int JJTSYMBOL = 11;
+  public int JJTEXPRESSION = 12;
+  public int JJTNEWOBJECT = 13;
+  public int JJTOBJECTATTR = 14;
+  public int JJTEXPRESSIONLEFT = 15;
 
 
   public String[] jjtNodeName = {
@@ -24,10 +28,14 @@ public interface JavaMMTreeConstants
     "Type",
     "VarDeclaration",
     "Statement",
-    "FollowIdentifier",
+    "Assignment",
+    "PositionAccess",
+    "AssignmentLeft",
     "Symbol",
     "Expression",
+    "NewObject",
+    "ObjectAttr",
     "ExpressionLeft",
   };
 }
-/* JavaCC - OriginalChecksum=274afdd1fba6528a43f36396d528382b (do not edit this line) */
+/* JavaCC - OriginalChecksum=4340e80a5e434161068343a337361f96 (do not edit this line) */
