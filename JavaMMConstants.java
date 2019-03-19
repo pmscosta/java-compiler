@@ -11,85 +11,83 @@ public interface JavaMMConstants {
   /** RegularExpression Id. */
   int INTEGER = 5;
   /** RegularExpression Id. */
-  int CLASS = 6;
+  int DECIMAL_LITERAL = 6;
   /** RegularExpression Id. */
-  int EXTENDS = 7;
+  int HEX_LITERAL = 7;
   /** RegularExpression Id. */
-  int TYPEINT = 8;
+  int OCTAL_LITERAL = 8;
   /** RegularExpression Id. */
-  int TYPESTRING = 9;
+  int CLASS = 9;
   /** RegularExpression Id. */
-  int TYPEBOOLEAN = 10;
+  int EXTENDS = 10;
   /** RegularExpression Id. */
-  int PUBLIC = 11;
+  int TYPEINT = 11;
   /** RegularExpression Id. */
-  int STATIC = 12;
+  int TYPESTRING = 12;
   /** RegularExpression Id. */
-  int VOID = 13;
+  int TYPEBOOLEAN = 13;
   /** RegularExpression Id. */
-  int MAIN = 14;
+  int PUBLIC = 14;
   /** RegularExpression Id. */
-  int RETURN = 15;
+  int STATIC = 15;
   /** RegularExpression Id. */
-  int IF = 16;
+  int VOID = 16;
   /** RegularExpression Id. */
-  int ELSE = 17;
+  int MAIN = 17;
   /** RegularExpression Id. */
-  int WHILE = 18;
+  int RETURN = 18;
   /** RegularExpression Id. */
-  int EQUAL = 19;
+  int IF = 19;
   /** RegularExpression Id. */
-  int TRUE = 20;
+  int ELSE = 20;
   /** RegularExpression Id. */
-  int LENGTH = 21;
+  int WHILE = 21;
   /** RegularExpression Id. */
-  int FALSE = 22;
+  int EQUAL = 22;
   /** RegularExpression Id. */
-  int THIS = 23;
+  int TRUE = 23;
   /** RegularExpression Id. */
-  int NEW = 24;
+  int LENGTH = 24;
   /** RegularExpression Id. */
-  int SMALLERSIGN = 25;
+  int FALSE = 25;
   /** RegularExpression Id. */
-  int PLUSSIGN = 26;
+  int THIS = 26;
   /** RegularExpression Id. */
-  int MINUSIGN = 27;
+  int NEW = 27;
   /** RegularExpression Id. */
-  int TIMESSIGN = 28;
+  int SMALLERSIGN = 28;
   /** RegularExpression Id. */
-  int DIVIDESIGN = 29;
+  int PLUSSIGN = 29;
   /** RegularExpression Id. */
-  int LOGICAND = 30;
+  int MINUSIGN = 30;
   /** RegularExpression Id. */
-  int LOGICNOT = 31;
+  int TIMESSIGN = 31;
   /** RegularExpression Id. */
-  int OPENCURLYBRACKET = 32;
+  int DIVIDESIGN = 32;
   /** RegularExpression Id. */
-  int CLOSECURLYBRACKET = 33;
+  int LOGICAND = 33;
   /** RegularExpression Id. */
-  int OPENBRACKET = 34;
+  int LOGICNOT = 34;
   /** RegularExpression Id. */
-  int CLOSEBRACKET = 35;
+  int OPENCURLYBRACKET = 35;
   /** RegularExpression Id. */
-  int SEMICOLON = 36;
+  int CLOSECURLYBRACKET = 36;
   /** RegularExpression Id. */
-  int PARENTHESISOPEN = 37;
+  int OPENBRACKET = 37;
   /** RegularExpression Id. */
-  int PARENTHESISCLOSE = 38;
+  int CLOSEBRACKET = 38;
   /** RegularExpression Id. */
-  int COMMA = 39;
+  int SEMICOLON = 39;
   /** RegularExpression Id. */
-  int POINT = 40;
+  int PARENTHESISOPEN = 40;
   /** RegularExpression Id. */
-  int INTEGER_LITERAL = 41;
+  int PARENTHESISCLOSE = 41;
   /** RegularExpression Id. */
-  int DECIMAL_LITERAL = 42;
+  int COMMA = 42;
   /** RegularExpression Id. */
-  int HEX_LITERAL = 43;
+  int POINT = 43;
   /** RegularExpression Id. */
-  int OCTAL_LITERAL = 44;
-  /** RegularExpression Id. */
-  int IDENTIFIER = 45;
+  int IDENTIFIER = 44;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -102,6 +100,9 @@ public interface JavaMMConstants {
     "\"\\r\"",
     "\"\\n\"",
     "<INTEGER>",
+    "<DECIMAL_LITERAL>",
+    "<HEX_LITERAL>",
+    "<OCTAL_LITERAL>",
     "\"class\"",
     "\"extends\"",
     "\"int\"",
@@ -137,10 +138,6 @@ public interface JavaMMConstants {
     "\")\"",
     "\",\"",
     "\".\"",
-    "<INTEGER_LITERAL>",
-    "<DECIMAL_LITERAL>",
-    "<HEX_LITERAL>",
-    "<OCTAL_LITERAL>",
     "<IDENTIFIER>",
   };
 

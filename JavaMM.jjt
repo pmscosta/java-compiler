@@ -1,6 +1,7 @@
 options
 {
     LOOKAHEAD=1;
+    MULTI=true;
 }
 
 PARSER_BEGIN(JavaMM)
@@ -38,7 +39,12 @@ PARSER_END(JavaMM)
 
            // definição dos tokens (símbolos terminais)
 TOKEN : {
-        <   INTEGER : (["0" - "9"])+ >
+        <  INTEGER:  <DECIMAL_LITERAL> (["l","L"])?
+                                | <HEX_LITERAL> (["l","L"])?
+                                | <OCTAL_LITERAL> (["l","L"])? >
+                                | < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* >
+                                | < #HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ >
+                                | < #OCTAL_LITERAL: "0" (["0"-"7"])* >
         |   < CLASS: "class" >
         |   < EXTENDS: "extends" >
         |   < TYPEINT: "int" >
@@ -74,12 +80,6 @@ TOKEN : {
         |   < PARENTHESISCLOSE: ")" >
         |   < COMMA: "," >
         |   < POINT: "." >
-        |   < INTEGER_LITERAL:  <DECIMAL_LITERAL> (["l","L"])?
-                                | <HEX_LITERAL> (["l","L"])?
-                                | <OCTAL_LITERAL> (["l","L"])? >
-                                | < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* >
-                                | < #HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ >
-                                | < #OCTAL_LITERAL: "0" (["0"-"7"])* >
         |   < IDENTIFIER: ["a"-"z", "A"-"Z", "_", "$"](["a"-"z", "A"-"Z", "_", "$", "0"-"9"])* >
         }
 
@@ -128,8 +128,10 @@ void FunctionBody() : {} {
     (Statement())*
 }
 
-void Type() : {} {
-    <TYPEBOOLEAN> | <TYPEINT> [<OPENBRACKET> <CLOSEBRACKET>] | <IDENTIFIER>
+void Type() : {Token t1;} {
+    <TYPEBOOLEAN> { jjtThis.type = "Boolean"; } 
+    | <TYPEINT> { jjtThis.type = "int"; } [<OPENBRACKET> <CLOSEBRACKET> { jjtThis.type = "int[]"; } ] 
+    | t1 = <IDENTIFIER> { jjtThis.type = t1.image; } 
 }
 
 void VarDeclaration() : {} {
@@ -150,6 +152,7 @@ void Statement() : {} {
     <WHILE> <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
         Statement()
     |
+    LOOKAHEAD(Expression() <SEMICOLON>)
     Expression() <SEMICOLON>
     |
     <IDENTIFIER> Assignment()
@@ -176,7 +179,7 @@ void Operator(): {} {
 
 void Expression(): {} 
 {
-    <INTEGER_LITERAL> ExpressionLeft()
+    <INTEGER> ExpressionLeft()
 |   <TRUE> ExpressionLeft()
 |   <FALSE> ExpressionLeft()
 |   <IDENTIFIER> ExpressionLeft()
