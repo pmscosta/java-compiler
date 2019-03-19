@@ -232,8 +232,14 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case IF:
         case WHILE:
-        case PLUSSIGN:
+        case TRUE:
+        case FALSE:
+        case THIS:
+        case NEW:
+        case LOGICNOT:
         case OPENCURLYBRACKET:
+        case PARENTHESISOPEN:
+        case INTEGER_LITERAL:
         case IDENTIFIER:
           ;
           break;
@@ -359,11 +365,17 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
         jj_consume_token(PARENTHESISCLOSE);
         Statement();
         break;
-      case PLUSSIGN:
+      case TRUE:
+      case FALSE:
+      case THIS:
+      case NEW:
+      case LOGICNOT:
+      case PARENTHESISOPEN:
+      case INTEGER_LITERAL:
+      case IDENTIFIER:
         Expression();
         jj_consume_token(SEMICOLON);
         break;
-      case IDENTIFIER:
         jj_consume_token(IDENTIFIER);
         FollowIdentifier();
         break;
@@ -439,20 +451,6 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     }
   }
 
-  static final public void Expression() throws ParseException {
-                     /*@bgen(jjtree) Expression */
-  SimpleNode jjtn000 = new SimpleNode(JJTEXPRESSION);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-    try {
-      jj_consume_token(PLUSSIGN);
-    } finally {
-      if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
-      }
-    }
-  }
-
   static final public void Symbol() throws ParseException {
                 /*@bgen(jjtree) Symbol */
   SimpleNode jjtn000 = new SimpleNode(JJTSYMBOL);
@@ -483,6 +481,140 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
         jj_consume_token(-1);
         throw new ParseException();
       }
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+      }
+    }
+  }
+
+  static final public void Expression() throws ParseException {
+                    /*@bgen(jjtree) Expression */
+  SimpleNode jjtn000 = new SimpleNode(JJTEXPRESSION);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+    try {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case INTEGER_LITERAL:
+        jj_consume_token(INTEGER_LITERAL);
+        ExpressionLeft();
+        break;
+      case TRUE:
+        jj_consume_token(TRUE);
+        ExpressionLeft();
+        break;
+      case FALSE:
+        jj_consume_token(FALSE);
+        ExpressionLeft();
+        break;
+      case IDENTIFIER:
+        jj_consume_token(IDENTIFIER);
+        ExpressionLeft();
+        break;
+      case THIS:
+        jj_consume_token(THIS);
+        ExpressionLeft();
+        break;
+      case NEW:
+        jj_consume_token(NEW);
+        jj_consume_token(TYPEINT);
+        jj_consume_token(OPENBRACKET);
+        Expression();
+        jj_consume_token(CLOSEBRACKET);
+        ExpressionLeft();
+        break;
+        jj_consume_token(NEW);
+        jj_consume_token(IDENTIFIER);
+        jj_consume_token(PARENTHESISOPEN);
+        jj_consume_token(PARENTHESISCLOSE);
+        ExpressionLeft();
+        break;
+      case LOGICNOT:
+        jj_consume_token(LOGICNOT);
+        Expression();
+        ExpressionLeft();
+        break;
+      case PARENTHESISOPEN:
+        jj_consume_token(PARENTHESISOPEN);
+        Expression();
+        jj_consume_token(PARENTHESISCLOSE);
+        ExpressionLeft();
+        break;
+      default:
+        jj_la1[11] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    } catch (Throwable jjte000) {
+      if (jjtc000) {
+        jjtree.clearNodeScope(jjtn000);
+        jjtc000 = false;
+      } else {
+        jjtree.popNode();
+      }
+      if (jjte000 instanceof RuntimeException) {
+        {if (true) throw (RuntimeException)jjte000;}
+      }
+      if (jjte000 instanceof ParseException) {
+        {if (true) throw (ParseException)jjte000;}
+      }
+      {if (true) throw (Error)jjte000;}
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+      }
+    }
+  }
+
+  static final public void ExpressionLeft() throws ParseException {
+                        /*@bgen(jjtree) ExpressionLeft */
+  SimpleNode jjtn000 = new SimpleNode(JJTEXPRESSIONLEFT);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+    try {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case SMALLERSIGN:
+      case PLUSSIGN:
+      case MINUSIGN:
+      case TIMESSIGN:
+      case DIVIDESIGN:
+      case LOGICAND:
+        Symbol();
+        Expression();
+        ExpressionLeft();
+        break;
+      case OPENBRACKET:
+        jj_consume_token(OPENBRACKET);
+        Expression();
+        jj_consume_token(CLOSEBRACKET);
+        break;
+      case POINT:
+        jj_consume_token(POINT);
+        jj_consume_token(LENGTH);
+        ExpressionLeft();
+        break;
+        jj_consume_token(POINT);
+        jj_consume_token(IDENTIFIER);
+        ExpressionLeft();
+        break;
+      default:
+        jj_la1[12] = jj_gen;
+        Empty();
+      }
+    } catch (Throwable jjte000) {
+      if (jjtc000) {
+        jjtree.clearNodeScope(jjtn000);
+        jjtc000 = false;
+      } else {
+        jjtree.popNode();
+      }
+      if (jjte000 instanceof RuntimeException) {
+        {if (true) throw (RuntimeException)jjte000;}
+      }
+      if (jjte000 instanceof ParseException) {
+        {if (true) throw (ParseException)jjte000;}
+      }
+      {if (true) throw (Error)jjte000;}
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
@@ -546,7 +678,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
   static private Token jj_scanpos, jj_lastpos;
   static private int jj_la;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[11];
+  static final private int[] jj_la1 = new int[13];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static {
@@ -554,10 +686,10 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x80,0x500,0x800,0x0,0x500,0x4050000,0x0,0x500,0x4050000,0x80000,0x7e000000,};
+      jj_la1_0 = new int[] {0x80,0x500,0x800,0x0,0x500,0x81d50000,0x0,0x500,0x81d50000,0x80000,0x7e000000,0x81d00000,0x7e000000,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x0,0x2000,0x0,0x80,0x2000,0x2001,0x4,0x2000,0x2001,0x4,0x0,};
+      jj_la1_1 = new int[] {0x0,0x2000,0x0,0x80,0x2000,0x2221,0x4,0x2000,0x2221,0x4,0x0,0x2220,0x104,};
    }
   static final private JJCalls[] jj_2_rtns = new JJCalls[1];
   static private boolean jj_rescan = false;
@@ -581,7 +713,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 11; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 13; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -597,7 +729,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 11; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 13; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -615,7 +747,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 11; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 13; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -627,7 +759,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 11; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 13; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -644,7 +776,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 11; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 13; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -655,7 +787,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 11; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 13; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -775,7 +907,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 11; i++) {
+    for (int i = 0; i < 13; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -846,28 +978,6 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     int arg;
     JJCalls next;
   }
-
-/*
-  void Expression_TEST(): {} {
-        <INTEGER_LITERAL> ExpressionLeft()
-    |   <TRUE> ExpressionLeft()
-    |   <FALSE> ExpressionLeft()
-    |   <IDENTIFIER> ExpressionLeft()
-    |   <THIS> ExpressionLeft()
-    |   <NEW> <TYPEINT> <OPENBRACKET> Expression() <CLOSEBRACKET> ExpressionLeft()
-    |   <NEW> <IDENTIFIER> <PARENTHESISOPEN> <PARENTHESISCLOSE> ExpressionLeft()
-    |   <LOGICNOT> Expression() ExpressionLeft()
-    |   <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE> ExpressionLeft()
-    }
-
-    void ExpressionLeft(): {} {
-        Symbol() Expression() ExpressionLeft()
-        | <OPENBRACKET> Expression() <CLOSEBRACKET>
-        | <POINT> <LENGTH> ExpressionLeft()
-        | <POINT> <IDENTIFIER> ExpressionLeft()
-        | Empty()
-    }  */
-
 
   // luiscubal@fe.up.pt
 }

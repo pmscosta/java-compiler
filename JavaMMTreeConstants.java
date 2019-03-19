@@ -10,8 +10,9 @@ public interface JavaMMTreeConstants
   public int JJTVARDECLARATION = 6;
   public int JJTSTATEMENT = 7;
   public int JJTFOLLOWIDENTIFIER = 8;
-  public int JJTEXPRESSION = 9;
-  public int JJTSYMBOL = 10;
+  public int JJTSYMBOL = 9;
+  public int JJTEXPRESSION = 10;
+  public int JJTEXPRESSIONLEFT = 11;
 
 
   public String[] jjtNodeName = {
@@ -24,8 +25,9 @@ public interface JavaMMTreeConstants
     "VarDeclaration",
     "Statement",
     "FollowIdentifier",
-    "Expression",
     "Symbol",
+    "Expression",
+    "ExpressionLeft",
   };
 }
-/* JavaCC - OriginalChecksum=c2ff58a66fc8ce1354adefbad970dcc4 (do not edit this line) */
+/* JavaCC - OriginalChecksum=274afdd1fba6528a43f36396d528382b (do not edit this line) */
