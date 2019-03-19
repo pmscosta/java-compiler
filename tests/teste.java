@@ -1,6 +1,6 @@
 class Teste extends Pdro {
 
-  int[] array;
+  int[] arr;
   boolean array;
   int array;
   Pedro array;
