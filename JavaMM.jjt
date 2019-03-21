@@ -119,10 +119,6 @@ void MainDeclaration() : {} {
 }
 
 
-void Empty(): {} {
-    {}
-}
-
 void FunctionBody() : {} {
     ( LOOKAHEAD(2) VarDeclaration())*
     (Statement())*
@@ -142,7 +138,7 @@ void VarDeclaration() : {Token t1;} {
 void Statement() : {} {
  
     <OPENCURLYBRACKET>
-        Statement()
+        ( Statement() )*
     <CLOSECURLYBRACKET>
     |   
     <IF> <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
@@ -153,22 +149,69 @@ void Statement() : {} {
     <WHILE> <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
         Statement()
     |
-    LOOKAHEAD(Expression() <SEMICOLON>)
-    Expression() <SEMICOLON>
+    ExpressionSubset() <SEMICOLON>
     |
-    <IDENTIFIER> Assignment()
+    <IDENTIFIER>  ( IdentifierStmt() )? <SEMICOLON>
 }
 
-void Assignment(): {} {
-    (PositionAccess())? AssignmentLeft()
+
+void IdentifierStmt(): {} {
+    ExpressionLeftSubset()  | PositionAccess() (Assignment() | ExpressionLeft())  | Assignment() 
 }
 
 void PositionAccess() : {} {
-    <OPENBRACKET> Expression() <CLOSEBRACKET>
+    <OPENBRACKET> Expression() <CLOSEBRACKET> 
 }
 
-void AssignmentLeft(): {} {
-    <EQUAL> Expression() <SEMICOLON>
+void Assignment(): {} {
+    <EQUAL> Expression()
+}
+
+
+
+
+void NewObject(): {} {
+
+    <TYPEINT> <OPENBRACKET> Expression() <CLOSEBRACKET>
+    | <IDENTIFIER> <PARENTHESISOPEN> <PARENTHESISCLOSE>
+}
+
+void ObjectAttr(): {} {
+    <IDENTIFIER>
+    <PARENTHESISOPEN>
+        ( Expression() ( <COMMA> Expression() ) * )?
+    <PARENTHESISCLOSE>
+}
+
+
+void Expression(): {} 
+{
+        ExpressionSubset() |   <IDENTIFIER> ExpressionLeft()
+}
+
+
+void ExpressionSubset() #void: {}
+{
+    <INTEGER> ExpressionLeft()
+|   <TRUE> ExpressionLeft()
+|   <FALSE> ExpressionLeft()
+|   <THIS> ExpressionLeft()
+|   <NEW> NewObject() ExpressionLeft()
+|   <LOGICNOT> Expression() ExpressionLeft()
+|   <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE> ExpressionLeft()
+}
+
+
+void ExpressionLeft() #void: {}
+{
+    ExpressionLeftSubset()
+    | PositionAccess()  ExpressionLeft()
+    | Empty()
+}
+
+void ExpressionLeftSubset() #void: {} {
+    Operator() Expression()
+    | <POINT> ( ObjectAttr() | <LENGTH> ) ExpressionLeft()
 }
 
 
@@ -178,34 +221,26 @@ void Operator(): {} {
 
 }
 
-void Expression(): {} 
+void FirstLevelPrecende(): {}
 {
-    <INTEGER> ExpressionLeft()
-|   <TRUE> ExpressionLeft()
-|   <FALSE> ExpressionLeft()
-|   <IDENTIFIER> ExpressionLeft()
-|   <THIS> ExpressionLeft()
-|   <NEW> NewObject()
-|   <LOGICNOT> Expression() ExpressionLeft()
-|   <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE> ExpressionLeft()
-
+    SecondLevelPrecende() (  <LOGICAND> SecondLevelPrecende())?
 }
 
-void NewObject(): {} {
-
-    <TYPEINT> <OPENBRACKET> Expression() <CLOSEBRACKET> ExpressionLeft()
-    | <IDENTIFIER> <PARENTHESISOPEN> <PARENTHESISCLOSE> ExpressionLeft()
-}
-
-void ObjectAttr(): {} {
-    <LENGTH> ExpressionLeft()
-    | <IDENTIFIER> ExpressionLeft()
-}
-
-void ExpressionLeft(): {}
+void SecondLevelPrecende(): {}
 {
-    Operator() Expression() ExpressionLeft()
-    | PositionAccess()
-    | <POINT> ObjectAttr()
-    | Empty()
-} 
+    ThirdLevelPrecende() ( <SMALLERSIGN> ThirdLevelPrecende() )?
+}
+
+void ThirdLevelPrecende(): {}
+{
+    FourthLevelPrecende() ( (<PLUSSIGN>|<MINUSIGN>) FourthLevelPrecende() )?
+}
+
+void FourthLevelPrecende(): {}
+{
+    ( (<TIMESSIGN>|<DIVIDESIGN>) Expression() )?
+}
+
+void Empty() #void: {} {
+    {}
+}

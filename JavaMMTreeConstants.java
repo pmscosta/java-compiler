@@ -4,38 +4,44 @@ public interface JavaMMTreeConstants
   public int JJTCLASSDECLARATION = 0;
   public int JJTMETHODDECLARATION = 1;
   public int JJTMAINDECLARATION = 2;
-  public int JJTEMPTY = 3;
-  public int JJTFUNCTIONBODY = 4;
-  public int JJTTYPE = 5;
-  public int JJTVARDECLARATION = 6;
-  public int JJTSTATEMENT = 7;
-  public int JJTASSIGNMENT = 8;
-  public int JJTPOSITIONACCESS = 9;
-  public int JJTASSIGNMENTLEFT = 10;
-  public int JJTSYMBOL = 11;
+  public int JJTFUNCTIONBODY = 3;
+  public int JJTTYPE = 4;
+  public int JJTVARDECLARATION = 5;
+  public int JJTSTATEMENT = 6;
+  public int JJTIDENTIFIERSTMT = 7;
+  public int JJTPOSITIONACCESS = 8;
+  public int JJTASSIGNMENT = 9;
+  public int JJTNEWOBJECT = 10;
+  public int JJTOBJECTATTR = 11;
   public int JJTEXPRESSION = 12;
-  public int JJTNEWOBJECT = 13;
-  public int JJTOBJECTATTR = 14;
-  public int JJTEXPRESSIONLEFT = 15;
+  public int JJTVOID = 13;
+  public int JJTOPERATOR = 14;
+  public int JJTFIRSTLEVELPRECENDE = 15;
+  public int JJTSECONDLEVELPRECENDE = 16;
+  public int JJTTHIRDLEVELPRECENDE = 17;
+  public int JJTFOURTHLEVELPRECENDE = 18;
 
 
   public String[] jjtNodeName = {
     "ClassDeclaration",
     "MethodDeclaration",
     "MainDeclaration",
-    "Empty",
     "FunctionBody",
     "Type",
     "VarDeclaration",
     "Statement",
-    "Assignment",
+    "IdentifierStmt",
     "PositionAccess",
-    "AssignmentLeft",
-    "Symbol",
-    "Expression",
+    "Assignment",
     "NewObject",
     "ObjectAttr",
-    "ExpressionLeft",
+    "Expression",
+    "void",
+    "Operator",
+    "FirstLevelPrecende",
+    "SecondLevelPrecende",
+    "ThirdLevelPrecende",
+    "FourthLevelPrecende",
   };
 }
-/* JavaCC - OriginalChecksum=4340e80a5e434161068343a337361f96 (do not edit this line) */
+/* JavaCC - OriginalChecksum=9d63107c57ecc27cb08de840cece9be4 (do not edit this line) */

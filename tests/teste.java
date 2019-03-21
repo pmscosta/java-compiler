@@ -1,20 +1,9 @@
 class ClasseTeste extends Pdro {
 
-  int[] arr;
-  boolean array;
-  int array;
-  Pedro array;
-  boolean array;
+  public int FuncaoTeste() {
 
-  public int FuncaoTeste(int a, boolean b) {
-    int[] a;
-    boolean b;
+    a && b + 2 * 3 - 4 / 5 +1;
 
-    if (true){
-      a = 1;
-    } else {
-        b = 1;
-    }
-    return 2+3;
+    return 3;
   }
 }
