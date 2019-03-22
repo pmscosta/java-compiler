@@ -2,6 +2,7 @@ options
 {
     LOOKAHEAD=1;
     MULTI=true;
+    TRACK_TOKENS = true;
 }
 
 PARSER_BEGIN(JavaMM)
@@ -27,6 +28,23 @@ public
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
+  }
+
+  public static void error_skipto(int kind){
+      ParseException e = generateParseException();
+      System.out.println(e.toString());
+      Token t;
+
+      do{
+
+          t = getToken(1);
+
+          if(t.kind == kind)
+            return;
+
+          t = getNextToken();
+          System.out.println(t.image);
+      } while(t.kind != kind);
   }
 
   // luiscubal@fe.up.pt
@@ -146,12 +164,28 @@ void Statement() : {} {
     <ELSE>
         Statement()
     |
-    <WHILE> <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
-        Statement()
+    While()
     |
     ExpressionSubset() <SEMICOLON>
     |
     <IDENTIFIER>  ( IdentifierStmt() )? <SEMICOLON>
+}
+
+void While() : {Token t1;}{
+
+    <WHILE>
+        <PARENTHESISOPEN>
+        { try{
+            Expression();
+        } catch(ParseException e){
+            error_skipto(PARENTHESISCLOSE);
+        }
+        }
+        <PARENTHESISCLOSE>
+        
+        Statement()
+
+
 }
 
 

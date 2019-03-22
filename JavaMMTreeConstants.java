@@ -8,18 +8,19 @@ public interface JavaMMTreeConstants
   public int JJTTYPE = 4;
   public int JJTVARDECLARATION = 5;
   public int JJTSTATEMENT = 6;
-  public int JJTIDENTIFIERSTMT = 7;
-  public int JJTPOSITIONACCESS = 8;
-  public int JJTASSIGNMENT = 9;
-  public int JJTNEWOBJECT = 10;
-  public int JJTOBJECTATTR = 11;
-  public int JJTEXPRESSION = 12;
-  public int JJTVOID = 13;
-  public int JJTOPERATOR = 14;
-  public int JJTFIRSTLEVELPRECENDE = 15;
-  public int JJTSECONDLEVELPRECENDE = 16;
-  public int JJTTHIRDLEVELPRECENDE = 17;
-  public int JJTFOURTHLEVELPRECENDE = 18;
+  public int JJTWHILE = 7;
+  public int JJTIDENTIFIERSTMT = 8;
+  public int JJTPOSITIONACCESS = 9;
+  public int JJTASSIGNMENT = 10;
+  public int JJTNEWOBJECT = 11;
+  public int JJTOBJECTATTR = 12;
+  public int JJTEXPRESSION = 13;
+  public int JJTVOID = 14;
+  public int JJTOPERATOR = 15;
+  public int JJTFIRSTLEVELPRECENDE = 16;
+  public int JJTSECONDLEVELPRECENDE = 17;
+  public int JJTTHIRDLEVELPRECENDE = 18;
+  public int JJTFOURTHLEVELPRECENDE = 19;
 
 
   public String[] jjtNodeName = {
@@ -30,6 +31,7 @@ public interface JavaMMTreeConstants
     "Type",
     "VarDeclaration",
     "Statement",
+    "While",
     "IdentifierStmt",
     "PositionAccess",
     "Assignment",
@@ -44,4 +46,4 @@ public interface JavaMMTreeConstants
     "FourthLevelPrecende",
   };
 }
-/* JavaCC - OriginalChecksum=9d63107c57ecc27cb08de840cece9be4 (do not edit this line) */
+/* JavaCC - OriginalChecksum=e22ebec16b9bf86ffb07e1672596c991 (do not edit this line) */
