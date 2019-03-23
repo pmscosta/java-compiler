@@ -3,42 +3,52 @@ public interface JavaMMTreeConstants
 {
   public int JJTCLASSDECLARATION = 0;
   public int JJTMETHODDECLARATION = 1;
-  public int JJTMAINDECLARATION = 2;
-  public int JJTFUNCTIONBODY = 3;
-  public int JJTTYPE = 4;
-  public int JJTVARDECLARATION = 5;
-  public int JJTSTATEMENT = 6;
-  public int JJTWHILE = 7;
-  public int JJTIDENTIFIERSTMT = 8;
-  public int JJTPOSITIONACCESS = 9;
-  public int JJTASSIGNMENT = 10;
-  public int JJTNEWOBJECT = 11;
-  public int JJTOBJECTATTR = 12;
-  public int JJTEXPRESSION = 13;
-  public int JJTVOID = 14;
-  public int JJTOPERATOR = 15;
-  public int JJTFIRSTLEVELPRECENDE = 16;
-  public int JJTSECONDLEVELPRECENDE = 17;
-  public int JJTTHIRDLEVELPRECENDE = 18;
-  public int JJTFOURTHLEVELPRECENDE = 19;
+  public int JJTRETURN = 2;
+  public int JJTARGUMENTS = 3;
+  public int JJTARGUMENT = 4;
+  public int JJTMAINDECLARATION = 5;
+  public int JJTFUNCTIONBODY = 6;
+  public int JJTTYPE = 7;
+  public int JJTVARDECLARATION = 8;
+  public int JJTVOID = 9;
+  public int JJTIF = 10;
+  public int JJTELSE = 11;
+  public int JJTASSIGNMENT = 12;
+  public int JJTWHILE = 13;
+  public int JJTPOSITIONACCESS = 14;
+  public int JJTASSIGNMENTLEFT = 15;
+  public int JJTNEWOBJECT = 16;
+  public int JJTOBJECTATTR = 17;
+  public int JJTEXPRESSIONIDENT = 18;
+  public int JJTEXPRESSIONSUBSET = 19;
+  public int JJTOPERATOR = 20;
+  public int JJTFIRSTLEVELPRECENDE = 21;
+  public int JJTSECONDLEVELPRECENDE = 22;
+  public int JJTTHIRDLEVELPRECENDE = 23;
+  public int JJTFOURTHLEVELPRECENDE = 24;
 
 
   public String[] jjtNodeName = {
     "ClassDeclaration",
     "MethodDeclaration",
+    "Return",
+    "Arguments",
+    "Argument",
     "MainDeclaration",
     "FunctionBody",
     "Type",
     "VarDeclaration",
-    "Statement",
-    "While",
-    "IdentifierStmt",
-    "PositionAccess",
+    "void",
+    "IF",
+    "ELSE",
     "Assignment",
+    "While",
+    "PositionAccess",
+    "AssignmentLeft",
     "NewObject",
     "ObjectAttr",
-    "Expression",
-    "void",
+    "ExpressionIdent",
+    "ExpressionSubset",
     "Operator",
     "FirstLevelPrecende",
     "SecondLevelPrecende",
@@ -46,4 +56,4 @@ public interface JavaMMTreeConstants
     "FourthLevelPrecende",
   };
 }
-/* JavaCC - OriginalChecksum=e22ebec16b9bf86ffb07e1672596c991 (do not edit this line) */
+/* JavaCC - OriginalChecksum=addddab6a398173342f63ea53b511fdf (do not edit this line) */

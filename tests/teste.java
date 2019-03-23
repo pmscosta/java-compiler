@@ -1,17 +1,23 @@
 class ClasseTeste extends Pdro {
 
-  public int FuncaoTeste() {
+  public int getObjects(int num, boolean isComplete, int[] objects) {
 
-    a && b + 2 * 3 - 4 / 6 +1;
+    int a;
 
-    a[3] = 2;
+    a = 1;
 
-    a[a.length - 1] = 3;
-
-
-    while(a < ){
-      b = b+1;
+    while (a < 3) {
+      b = b + 1;
+      if (b < 2) {
+        a = a + 1;
+      } else {
+        a = a + 2;
+      }
     }
+
+    a[b.length] = 1;
+
+    b = new int[3];
 
     return 3;
   }

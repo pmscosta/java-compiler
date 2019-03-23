@@ -117,12 +117,24 @@ SimpleNode ClassDeclaration() : {Token t1;} {
 void MethodDeclaration() : {Token t1;} {
     <PUBLIC> Type() t1 = <IDENTIFIER> {jjtThis.name = t1.image;} 
         <PARENTHESISOPEN>
-            [ Type() <IDENTIFIER> ( <COMMA> Type() <IDENTIFIER> )*]
+            Arguments()
         <PARENTHESISCLOSE>
     <OPENCURLYBRACKET>
         FunctionBody()
-        <RETURN> Expression() <SEMICOLON>
+        Return()
     <CLOSECURLYBRACKET>
+}
+
+void Return() : {}{
+        <RETURN> Expression() <SEMICOLON>
+}
+
+void Arguments() : {}{
+    [ Argument() ( <COMMA> Argument() )*]
+}
+
+void Argument() : {Token t1;}{
+    Type() t1 = <IDENTIFIER> {jjtThis.name = t1.image;}
 }
 
 
@@ -149,26 +161,31 @@ void Type() : {Token t1;} {
 }
 
 void VarDeclaration() : {Token t1;} {
-        Type() t1=<IDENTIFIER>{jjtThis.name = t1.image;} <SEMICOLON>
+        Type() t1=<IDENTIFIER>{jjtThis.identifier = t1.image;} <SEMICOLON>
 
 }
 
-void Statement() : {} {
+void Statement() #void : {} {
  
     <OPENCURLYBRACKET>
         ( Statement() )*
     <CLOSECURLYBRACKET>
     |   
-    <IF> <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
-        Statement()
-    <ELSE>
+    <IF> #IF 
+        <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
+            Statement()
+    <ELSE> #ELSE
         Statement()
     |
     While()
     |
     ExpressionSubset() <SEMICOLON>
     |
-    <IDENTIFIER>  ( IdentifierStmt() )? <SEMICOLON>
+    Assignment()
+}
+
+void Assignment() : {Token t1;}{
+    t1 = <IDENTIFIER> {jjtThis.name = t1.image;} ( IdentifierStmt() )? <SEMICOLON>
 }
 
 void While() : {Token t1;}{
@@ -184,30 +201,37 @@ void While() : {Token t1;}{
         <PARENTHESISCLOSE>
         
         Statement()
-
-
 }
 
 
-void IdentifierStmt(): {} {
-    ExpressionLeftSubset()  | PositionAccess() (Assignment() | ExpressionLeft())  | Assignment() 
+void IdentifierStmt() #void : {} {
+    ExpressionLeftSubset()  
+    | 
+    PositionAccess() (AssignmentLeft() 
+    | 
+    ExpressionLeft())  
+    | 
+    AssignmentLeft() 
 }
 
-void PositionAccess() : {} {
+void PositionAccess() : {Token t1;} {
     <OPENBRACKET> Expression() <CLOSEBRACKET> 
 }
 
-void Assignment(): {} {
+void AssignmentLeft(): {} {
     <EQUAL> Expression()
 }
 
 
 
 
-void NewObject(): {} {
-
-    <TYPEINT> <OPENBRACKET> Expression() <CLOSEBRACKET>
-    | <IDENTIFIER> <PARENTHESISOPEN> <PARENTHESISCLOSE>
+void NewObject(): {Token t1;} {
+    
+    (
+    t1 = <TYPEINT> <OPENBRACKET> Expression() <CLOSEBRACKET>
+    | 
+    t1 = <IDENTIFIER> <PARENTHESISOPEN> <PARENTHESISCLOSE> 
+    ){jjtThis.name = t1.image;}
 }
 
 void ObjectAttr(): {} {
@@ -218,21 +242,32 @@ void ObjectAttr(): {} {
 }
 
 
-void Expression(): {} 
+void Expression()  #void: {} 
 {
-        ExpressionSubset() |   <IDENTIFIER> ExpressionLeft()
+        ExpressionSubset() |   ExpressionIdent()
+}
+
+void ExpressionIdent() : {Token t1;}{
+        t1 = <IDENTIFIER> {jjtThis.name = t1.image;} ExpressionLeft()
 }
 
 
-void ExpressionSubset() #void: {}
+void ExpressionSubset() : {Token t1;}
 {
-    <INTEGER> ExpressionLeft()
-|   <TRUE> ExpressionLeft()
-|   <FALSE> ExpressionLeft()
-|   <THIS> ExpressionLeft()
-|   <NEW> NewObject() ExpressionLeft()
-|   <LOGICNOT> Expression() ExpressionLeft()
-|   <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE> ExpressionLeft()
+    (
+    t1 = <INTEGER> ExpressionLeft()
+    |   
+    t1 = <TRUE> ExpressionLeft()
+    |
+    t1 = <FALSE> ExpressionLeft()
+    |   
+    t1 = <THIS> ExpressionLeft()
+    |   
+    t1 = <NEW> NewObject() ExpressionLeft()
+    |   
+    t1 = <LOGICNOT> Expression() ExpressionLeft() ){ jjtThis.name = t1.image;}
+    |   
+    <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE> ExpressionLeft()
 }
 
 
@@ -249,9 +284,22 @@ void ExpressionLeftSubset() #void: {} {
 }
 
 
-void Operator(): {} {
+void Operator(): {Token t1;} {
 
-    <LOGICAND>|<SMALLERSIGN>|<PLUSSIGN>|<MINUSIGN>|<TIMESSIGN>|<DIVIDESIGN>
+   (t1 = <LOGICAND>
+   |
+   t1 = <SMALLERSIGN>
+   |
+   t1 = <PLUSSIGN>
+   |
+   t1 = <MINUSIGN>
+   |
+   t1 = <TIMESSIGN>
+   |
+   t1 = <DIVIDESIGN>)
+   {
+       jjtThis.type = t1.image;
+   }
 
 }
 
