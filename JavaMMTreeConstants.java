@@ -21,11 +21,12 @@ public interface JavaMMTreeConstants
   public int JJTOBJECTATTR = 17;
   public int JJTEXPRESSIONIDENT = 18;
   public int JJTEXPRESSIONSUBSET = 19;
-  public int JJTOPERATOR = 20;
-  public int JJTFIRSTLEVELPRECENDE = 21;
-  public int JJTSECONDLEVELPRECENDE = 22;
-  public int JJTTHIRDLEVELPRECENDE = 23;
-  public int JJTFOURTHLEVELPRECENDE = 24;
+  public int JJTLENGTH = 20;
+  public int JJTOPERATOR = 21;
+  public int JJTFIRSTLEVELPRECENDE = 22;
+  public int JJTSECONDLEVELPRECENDE = 23;
+  public int JJTTHIRDLEVELPRECENDE = 24;
+  public int JJTFOURTHLEVELPRECENDE = 25;
 
 
   public String[] jjtNodeName = {
@@ -49,6 +50,7 @@ public interface JavaMMTreeConstants
     "ObjectAttr",
     "ExpressionIdent",
     "ExpressionSubset",
+    "Length",
     "Operator",
     "FirstLevelPrecende",
     "SecondLevelPrecende",
@@ -56,4 +58,4 @@ public interface JavaMMTreeConstants
     "FourthLevelPrecende",
   };
 }
-/* JavaCC - OriginalChecksum=84c6c48264c2e86ce8363400479c32ed (do not edit this line) */
+/* JavaCC - OriginalChecksum=13f5fde809d05229c23282d75fb973d4 (do not edit this line) */

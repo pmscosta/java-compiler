@@ -10,7 +10,7 @@ public class ASTPositionAccess extends SimpleNode {
   }
 
   public String toString() {
-    return "[" + super.toString() + "]";
+    return "at";
   }
 
 }

@@ -19,7 +19,19 @@ class ClasseTeste extends Pdro {
       }
     }
 
+    if (a.length < 40) {
+
+      while (a.length < 10) {
+        c[a.length] = a.length + 1;
+      }
+
+    } else {
+      c[a.length] = a.length;
+    }
+
     a[b.length] = 1;
+
+    a = b.coisa(a.length - 1);
 
     b = new int[3];
 

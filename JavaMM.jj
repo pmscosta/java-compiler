@@ -679,14 +679,14 @@ void NewObject(): {/*@bgen(jjtree) NewObject */
 }
 
 void ObjectAttr(): {/*@bgen(jjtree) ObjectAttr */
-  ASTObjectAttr jjtn000 = new ASTObjectAttr(JJTOBJECTATTR);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-  jjtn000.jjtSetFirstToken(getToken(1));
-/*@egen*/} {/*@bgen(jjtree) ObjectAttr */
+                    ASTObjectAttr jjtn000 = new ASTObjectAttr(JJTOBJECTATTR);
+                    boolean jjtc000 = true;
+                    jjtree.openNodeScope(jjtn000);
+                    jjtn000.jjtSetFirstToken(getToken(1));
+/*@egen*/Token t1;} {/*@bgen(jjtree) ObjectAttr */
     try {
 /*@egen*/
-    <IDENTIFIER>
+    t1 = <IDENTIFIER> {jjtn000.name = t1.image;}
     <PARENTHESISOPEN>
         ( Expression() ( <COMMA> Expression() ) * )?
     <PARENTHESISCLOSE>/*@bgen(jjtree)*/
@@ -751,7 +751,6 @@ void ExpressionIdent() : {/*@bgen(jjtree) ExpressionIdent */
 /*@egen*/
 }
 
-
 void ExpressionSubset() : {/*@bgen(jjtree) ExpressionSubset */
                            ASTExpressionSubset jjtn000 = new ASTExpressionSubset(JJTEXPRESSIONSUBSET);
                            boolean jjtc000 = true;
@@ -814,9 +813,26 @@ void ExpressionLeft()      : {}
 
 void ExpressionLeftSubset()      : {} {
     Operator() Expression()
-    | <POINT> ( ObjectAttr() | <LENGTH> ) ExpressionLeft()
+    | <POINT> ( ObjectAttr() | Length() ) ExpressionLeft()
 }
 
+void Length() : {/*@bgen(jjtree) Length */
+  ASTLength jjtn000 = new ASTLength(JJTLENGTH);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
+/*@egen*/}{/*@bgen(jjtree) Length */
+    try {
+/*@egen*/
+    <LENGTH>/*@bgen(jjtree)*/
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
+      }
+    }
+/*@egen*/
+}
 
 void Operator(): {/*@bgen(jjtree) Operator */
                   ASTOperator jjtn000 = new ASTOperator(JJTOPERATOR);

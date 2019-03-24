@@ -236,8 +236,8 @@ void NewObject(): {Token t1;} {
     ){jjtThis.name = t1.image;}
 }
 
-void ObjectAttr(): {} {
-    <IDENTIFIER>
+void ObjectAttr(): {Token t1;} {
+    t1 = <IDENTIFIER> {jjtThis.name = t1.image;}
     <PARENTHESISOPEN>
         ( Expression() ( <COMMA> Expression() ) * )?
     <PARENTHESISCLOSE>
@@ -252,7 +252,6 @@ void Expression()  #void: {}
 void ExpressionIdent() : {Token t1;}{
         t1 = <IDENTIFIER> {jjtThis.name = t1.image;} ExpressionLeft()
 }
-
 
 void ExpressionSubset() : {Token t1;}
 {
@@ -282,9 +281,12 @@ void ExpressionLeft() #void: {}
 
 void ExpressionLeftSubset() #void: {} {
     Operator() Expression()
-    | <POINT> ( ObjectAttr() | <LENGTH> ) ExpressionLeft()
+    | <POINT> ( ObjectAttr() | Length() ) ExpressionLeft()
 }
 
+void Length() : {}{
+    <LENGTH>
+}
 
 void Operator(): {Token t1;} {
 

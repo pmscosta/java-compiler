@@ -787,12 +787,13 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static final public void ObjectAttr() throws ParseException {
                     /*@bgen(jjtree) ObjectAttr */
-  ASTObjectAttr jjtn000 = new ASTObjectAttr(JJTOBJECTATTR);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-  jjtn000.jjtSetFirstToken(getToken(1));
+                    ASTObjectAttr jjtn000 = new ASTObjectAttr(JJTOBJECTATTR);
+                    boolean jjtc000 = true;
+                    jjtree.openNodeScope(jjtn000);
+                    jjtn000.jjtSetFirstToken(getToken(1));Token t1;
     try {
-      jj_consume_token(IDENTIFIER);
+      t1 = jj_consume_token(IDENTIFIER);
+                       jjtn000.name = t1.image;
       jj_consume_token(PARENTHESISOPEN);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case INTEGER:
@@ -1021,7 +1022,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
         ObjectAttr();
         break;
       case LENGTH:
-        jj_consume_token(LENGTH);
+        Length();
         break;
       default:
         jj_la1[21] = jj_gen;
@@ -1034,6 +1035,22 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
       jj_la1[22] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
+    }
+  }
+
+  static final public void Length() throws ParseException {
+                 /*@bgen(jjtree) Length */
+  ASTLength jjtn000 = new ASTLength(JJTLENGTH);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
+    try {
+      jj_consume_token(LENGTH);
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
+      }
     }
   }
 
