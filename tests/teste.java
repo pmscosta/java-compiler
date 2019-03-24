@@ -1,5 +1,9 @@
 class ClasseTeste extends Pdro {
 
+  public static void main(String[] args) {
+
+  }
+
   public int getObjects(int num, boolean isComplete, int[] objects) {
 
     int a;

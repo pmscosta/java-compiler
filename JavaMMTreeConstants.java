@@ -2,15 +2,15 @@
 public interface JavaMMTreeConstants
 {
   public int JJTCLASSDECLARATION = 0;
-  public int JJTMETHODDECLARATION = 1;
-  public int JJTRETURN = 2;
-  public int JJTARGUMENTS = 3;
-  public int JJTARGUMENT = 4;
-  public int JJTMAINDECLARATION = 5;
-  public int JJTFUNCTIONBODY = 6;
-  public int JJTTYPE = 7;
-  public int JJTVARDECLARATION = 8;
-  public int JJTVOID = 9;
+  public int JJTVOID = 1;
+  public int JJTMETHODDECLARATION = 2;
+  public int JJTMAINDECLARATION = 3;
+  public int JJTRETURN = 4;
+  public int JJTARGUMENTS = 5;
+  public int JJTARGUMENT = 6;
+  public int JJTFUNCTIONBODY = 7;
+  public int JJTTYPE = 8;
+  public int JJTVARDECLARATION = 9;
   public int JJTIF = 10;
   public int JJTELSE = 11;
   public int JJTASSIGNMENT = 12;
@@ -30,15 +30,15 @@ public interface JavaMMTreeConstants
 
   public String[] jjtNodeName = {
     "ClassDeclaration",
+    "void",
     "MethodDeclaration",
+    "MainDeclaration",
     "Return",
     "Arguments",
     "Argument",
-    "MainDeclaration",
     "FunctionBody",
     "Type",
     "VarDeclaration",
-    "void",
     "IF",
     "ELSE",
     "Assignment",
@@ -56,4 +56,4 @@ public interface JavaMMTreeConstants
     "FourthLevelPrecende",
   };
 }
-/* JavaCC - OriginalChecksum=addddab6a398173342f63ea53b511fdf (do not edit this line) */
+/* JavaCC - OriginalChecksum=84c6c48264c2e86ce8363400479c32ed (do not edit this line) */

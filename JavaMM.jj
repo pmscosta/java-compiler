@@ -47,11 +47,9 @@ public
             return;
 
           t = getNextToken();
-          System.out.println(t.image);
       } while(t.kind != kind);
   }
 
-  // luiscubal@fe.up.pt
 }
 
 PARSER_END(JavaMM)
@@ -117,8 +115,7 @@ SimpleNode ClassDeclaration() : {/*@bgen(jjtree) ClassDeclaration */
     < CLASS > t1=< IDENTIFIER >{jjtn000.name=t1.image;} [< EXTENDS > < IDENTIFIER >] <OPENCURLYBRACKET>
     
     ( VarDeclaration() )*
-   // [ MainDeclaration() ]   //FIX ME
-    ( MethodDeclaration() )*
+    ( PublicFunction() )*
     
     <CLOSECURLYBRACKET>/*@bgen(jjtree)*/
     {
@@ -152,6 +149,12 @@ SimpleNode ClassDeclaration() : {/*@bgen(jjtree) ClassDeclaration */
 /*@egen*/
 }
 
+void PublicFunction()       : {}{
+
+    <PUBLIC> (Type() MethodDeclaration() | <STATIC> MainDeclaration())
+
+}
+
 void MethodDeclaration() : {/*@bgen(jjtree) MethodDeclaration */
                             ASTMethodDeclaration jjtn000 = new ASTMethodDeclaration(JJTMETHODDECLARATION);
                             boolean jjtc000 = true;
@@ -160,13 +163,51 @@ void MethodDeclaration() : {/*@bgen(jjtree) MethodDeclaration */
 /*@egen*/Token t1;} {/*@bgen(jjtree) MethodDeclaration */
     try {
 /*@egen*/
-    <PUBLIC> Type() t1 = <IDENTIFIER> {jjtn000.name = t1.image;} 
+    t1 = <IDENTIFIER> {jjtn000.name = t1.image;} 
         <PARENTHESISOPEN>
             Arguments()
         <PARENTHESISCLOSE>
     <OPENCURLYBRACKET>
         FunctionBody()
         Return()
+    <CLOSECURLYBRACKET>/*@bgen(jjtree)*/
+    } catch (Throwable jjte000) {
+      if (jjtc000) {
+        jjtree.clearNodeScope(jjtn000);
+        jjtc000 = false;
+      } else {
+        jjtree.popNode();
+      }
+      if (jjte000 instanceof RuntimeException) {
+        throw (RuntimeException)jjte000;
+      }
+      if (jjte000 instanceof ParseException) {
+        throw (ParseException)jjte000;
+      }
+      throw (Error)jjte000;
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
+      }
+    }
+/*@egen*/
+}
+
+void MainDeclaration() : {/*@bgen(jjtree) MainDeclaration */
+  ASTMainDeclaration jjtn000 = new ASTMainDeclaration(JJTMAINDECLARATION);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
+/*@egen*/} {/*@bgen(jjtree) MainDeclaration */
+    try {
+/*@egen*/
+    <VOID> <MAIN> 
+        <PARENTHESISOPEN>
+            <TYPESTRING> <OPENBRACKET> <CLOSEBRACKET> <IDENTIFIER>
+        <PARENTHESISCLOSE>
+    <OPENCURLYBRACKET>
+        FunctionBody()
     <CLOSECURLYBRACKET>/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
@@ -270,45 +311,6 @@ void Argument() : {/*@bgen(jjtree) Argument */
                                jjtn000.jjtSetLastToken(getToken(0));
                              }
 /*@egen*/ {jjtn000.name = t1.image;}/*@bgen(jjtree)*/
-    } catch (Throwable jjte000) {
-      if (jjtc000) {
-        jjtree.clearNodeScope(jjtn000);
-        jjtc000 = false;
-      } else {
-        jjtree.popNode();
-      }
-      if (jjte000 instanceof RuntimeException) {
-        throw (RuntimeException)jjte000;
-      }
-      if (jjte000 instanceof ParseException) {
-        throw (ParseException)jjte000;
-      }
-      throw (Error)jjte000;
-    } finally {
-      if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
-        jjtn000.jjtSetLastToken(getToken(0));
-      }
-    }
-/*@egen*/
-}
-
-
-void MainDeclaration() : {/*@bgen(jjtree) MainDeclaration */
-  ASTMainDeclaration jjtn000 = new ASTMainDeclaration(JJTMAINDECLARATION);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-  jjtn000.jjtSetFirstToken(getToken(1));
-/*@egen*/} {/*@bgen(jjtree) MainDeclaration */
-    try {
-/*@egen*/
-    <PUBLIC> <STATIC> <VOID> <MAIN> 
-        <PARENTHESISOPEN>
-            <TYPESTRING> <OPENBRACKET> <CLOSEBRACKET> <IDENTIFIER>
-        <PARENTHESISCLOSE>
-    <OPENCURLYBRACKET>
-        FunctionBody()
-    <CLOSECURLYBRACKET>/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);

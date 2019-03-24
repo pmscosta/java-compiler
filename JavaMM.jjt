@@ -43,11 +43,9 @@ public
             return;
 
           t = getNextToken();
-          System.out.println(t.image);
       } while(t.kind != kind);
   }
 
-  // luiscubal@fe.up.pt
 }
 
 PARSER_END(JavaMM)
@@ -106,22 +104,37 @@ SimpleNode ClassDeclaration() : {Token t1;} {
     < CLASS > t1=< IDENTIFIER >{jjtThis.name=t1.image;} [< EXTENDS > < IDENTIFIER >] <OPENCURLYBRACKET>
     
     ( VarDeclaration() )*
-   // [ MainDeclaration() ]   //FIX ME
-    ( MethodDeclaration() )*
+    ( PublicFunction() )*
     
     <CLOSECURLYBRACKET>
 
     {return jjtThis;}
 }
 
+void PublicFunction() #void : {}{
+
+    <PUBLIC> (Type() MethodDeclaration() | <STATIC> MainDeclaration())
+
+}
+
 void MethodDeclaration() : {Token t1;} {
-    <PUBLIC> Type() t1 = <IDENTIFIER> {jjtThis.name = t1.image;} 
+    t1 = <IDENTIFIER> {jjtThis.name = t1.image;} 
         <PARENTHESISOPEN>
             Arguments()
         <PARENTHESISCLOSE>
     <OPENCURLYBRACKET>
         FunctionBody()
         Return()
+    <CLOSECURLYBRACKET>
+}
+
+void MainDeclaration() : {} {
+    <VOID> <MAIN> 
+        <PARENTHESISOPEN>
+            <TYPESTRING> <OPENBRACKET> <CLOSEBRACKET> <IDENTIFIER>
+        <PARENTHESISCLOSE>
+    <OPENCURLYBRACKET>
+        FunctionBody()
     <CLOSECURLYBRACKET>
 }
 
@@ -135,17 +148,6 @@ void Arguments() : {}{
 
 void Argument() : {Token t1;}{
     Type() t1 = <IDENTIFIER> {jjtThis.name = t1.image;}
-}
-
-
-void MainDeclaration() : {} {
-    <PUBLIC> <STATIC> <VOID> <MAIN> 
-        <PARENTHESISOPEN>
-            <TYPESTRING> <OPENBRACKET> <CLOSEBRACKET> <IDENTIFIER>
-        <PARENTHESISCLOSE>
-    <OPENCURLYBRACKET>
-        FunctionBody()
-    <CLOSECURLYBRACKET>
 }
 
 
