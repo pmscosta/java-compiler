@@ -40,8 +40,8 @@ public interface JavaMMTreeConstants
     "FunctionBody",
     "Type",
     "VarDeclaration",
-    "IF",
-    "ELSE",
+    "If",
+    "Else",
     "Assignment",
     "While",
     "PositionAccess",
@@ -58,4 +58,4 @@ public interface JavaMMTreeConstants
     "FourthLevelPrecende",
   };
 }
-/* JavaCC - OriginalChecksum=13f5fde809d05229c23282d75fb973d4 (do not edit this line) */
+/* JavaCC - OriginalChecksum=934f5ff3e86038cb53784fd40f6aad5c (do not edit this line) */

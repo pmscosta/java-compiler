@@ -173,17 +173,26 @@ void Statement() #void : {} {
         ( Statement() )*
     <CLOSECURLYBRACKET>
     |   
-    <IF> #IF 
-        <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
-            Statement()
-    <ELSE> #ELSE
-        Statement()
+    If()
+    Else()
     |
     While()
     |
     ExpressionSubset() <SEMICOLON>
     |
     Assignment()
+}
+
+void If() : {}{
+    <IF>
+        <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
+            Statement()
+}
+
+void Else() : {}{
+    <ELSE>
+
+        Statement()
 }
 
 void Assignment() : {Token t1;}{

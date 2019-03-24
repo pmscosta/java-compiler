@@ -4,6 +4,20 @@ class ClasseTeste extends Pdro {
 
   }
 
+  public boolean testStuff() {
+
+    int create;
+
+    int reference;
+
+    create = new int[3];
+
+    reference = this.coisa();
+
+    return false;
+
+  }
+
   public int getObjects(int num, boolean isComplete, int[] objects) {
 
     int a;
