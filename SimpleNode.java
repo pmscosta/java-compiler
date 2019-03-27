@@ -10,6 +10,24 @@ public class SimpleNode implements Node {
   protected Token firstToken;
   protected Token lastToken;
 
+  public static Node[] removeElement(Node[] arr, int index) {
+    if (arr == null || index < 0 || index >= arr.length) {
+
+      return arr;
+    }
+
+    Node[] anotherArray = new Node[arr.length - 1];
+
+    for (int i = 0, k = 0; i < arr.length; i++) {
+
+      if (i == index) {
+        continue;
+      }
+      anotherArray[k++] = arr[i];
+    }
+    return anotherArray;
+  }
+
   public SimpleNode(int i) {
     id = i;
   }
@@ -42,6 +60,10 @@ public class SimpleNode implements Node {
       children = c;
     }
     children[i] = n;
+  }
+
+  public void jjtRemoveChild(int i) {
+    children = removeElement(children, i);
   }
 
   public Node jjtGetChild(int i) {

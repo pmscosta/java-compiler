@@ -1,7 +1,7 @@
 class ClasseTeste extends Pdro {
 
   public static void main(String[] args) {
-
+      b < a;
   }
 
   public boolean testStuff() {

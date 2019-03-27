@@ -24,10 +24,47 @@ public
       file = new FileInputStream(fileName);
       JavaMM parser = new JavaMM(file);
       SimpleNode root = parser.ClassDeclaration();
+      reorganizetree(root);
       root.dump("");
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
+  }
+
+  public static void reorganizetree(SimpleNode node){
+
+    if(node instanceof ASTOperator){
+
+        System.out.println("yo");
+
+
+        SimpleNode left_term = (SimpleNode) node.jjtGetParent();
+
+        if(left_term.jjtGetNumChildren() == 2){
+
+        System.out.println(left_term.jjtGetNumChildren());
+
+        SimpleNode right_term = (SimpleNode) left_term.jjtGetChild(1);
+
+        left_term.jjtRemoveChild(0);
+
+        left_term.jjtRemoveChild(0);
+
+        Node expr =  left_term.jjtGetParent();
+
+        expr.jjtAddChild(node, 1);
+
+        expr.jjtAddChild(right_term, 2);
+        }
+    }
+
+    if(node.children != null){
+        for(int i = 0; i < node.jjtGetNumChildren(); i++){
+            SimpleNode n = (SimpleNode) node.jjtGetChild(i);
+            reorganizetree(n);
+        }
+    }
+
   }
 
   public static void error_skipto(int kind){
