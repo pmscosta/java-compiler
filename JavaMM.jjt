@@ -179,8 +179,6 @@ void Statement() #void : {} {
     While()
     |
     ExpressionTerminals() <SEMICOLON>
-    |
-    Assignment()
 }
 
 void If() : {}{
@@ -252,7 +250,7 @@ void ExpressionTerminals() #void: {}
     SecondLevelPrecende() 
     (
         <LOGICAND> SecondLevelPrecende() #And(2)
-    )?
+    )*
     ExpressionRight()
 }
 
@@ -261,7 +259,7 @@ void SecondLevelPrecende() #void : {}
     ThirdLevelPrecende() 
     ( 
         <SMALLERSIGN> ThirdLevelPrecende() #LessThan(2)
-    )?
+    )*
 }
 
 void ThirdLevelPrecende() #void :  {}
@@ -271,7 +269,7 @@ void ThirdLevelPrecende() #void :  {}
         <PLUSSIGN> FourthLevelPrecende() #Add(2) 
         |
         <MINUSIGN> FourthLevelPrecende() #Sub(2) 
-    )?
+    )*
 }
 
 void FourthLevelPrecende() #void : {Token t1;}
@@ -281,25 +279,26 @@ void FourthLevelPrecende() #void : {Token t1;}
         <TIMESSIGN>  PrecendeTerminals() #Mult(2)
         |
         <DIVIDESIGN> PrecendeTerminals() #Div(2) 
-    )?
+    )*
 }
 
-void PrecendeTerminals() : {}{
-    (
-        t1 = <INTEGER>
+void PrecendeTerminals() : {Token t1;}{
+        (   
+            t1 = <INTEGER>
+            |   
+            t1 = <TRUE> 
+            |
+            t1 = <FALSE>
+            |   
+            t1 = <THIS>
+            |   
+            t1 = <NEW> NewObject() 
+            |   
+            t1 = <LOGICNOT> Expression()
+        ) {jjtThis.name = t1.image;}
         |   
-        t1 = <TRUE> 
-        |
-        t1 = <FALSE>
-        |   
-        t1 = <THIS>
-        |   
-        t1 = <NEW> NewObject() 
-        |   
-        t1 = <LOGICNOT> Expression()
-        |   
-        <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
-    ) #Term
+            <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
+    
 }
 
 
@@ -347,26 +346,11 @@ void ExpressionRight() #void: {}
 }
 
 void ExpressionRightSubset() #void: {} {
-    Operator() Expression()
+     Expression()
     | <POINT> ( ObjectAttr() | Length() ) ExpressionRight()
 }
 
 
-/*
-
-
-
-
-
-
-
-
-
-
-
-
-
-*/
 
 
 
@@ -414,30 +398,6 @@ void Operator(): {Token t1;} {
    }
 
 }
-
-/*
-
-void FirstLevelPrecende(): {}
-{
-    SecondLevelPrecende() (  <LOGICAND> SecondLevelPrecende())?
-}
-
-void SecondLevelPrecende(): {}
-{
-    ThirdLevelPrecende() ( <SMALLERSIGN> ThirdLevelPrecende() )?
-}
-
-void ThirdLevelPrecende(): {}
-{
-    FourthLevelPrecende() ( (<PLUSSIGN>|<MINUSIGN>) FourthLevelPrecende() )?
-}
-
-void FourthLevelPrecende(): {}
-{
-    ( (<TIMESSIGN>|<DIVIDESIGN>) Expression() )?
-}
-
-*/
 
 void Empty() #void: {} {
     {}

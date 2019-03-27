@@ -23,13 +23,12 @@ public interface JavaMMTreeConstants
   public int JJTMULT = 19;
   public int JJTDIV = 20;
   public int JJTPRECENDETERMINALS = 21;
-  public int JJTTERM = 22;
-  public int JJTEXPRESSIONIDENT = 23;
-  public int JJTPOSITIONACCESS = 24;
-  public int JJTNEWOBJECT = 25;
-  public int JJTOBJECTATTR = 26;
-  public int JJTLENGTH = 27;
-  public int JJTOPERATOR = 28;
+  public int JJTEXPRESSIONIDENT = 22;
+  public int JJTPOSITIONACCESS = 23;
+  public int JJTNEWOBJECT = 24;
+  public int JJTOBJECTATTR = 25;
+  public int JJTLENGTH = 26;
+  public int JJTOPERATOR = 27;
 
 
   public String[] jjtNodeName = {
@@ -55,7 +54,6 @@ public interface JavaMMTreeConstants
     "Mult",
     "Div",
     "PrecendeTerminals",
-    "Term",
     "ExpressionIdent",
     "PositionAccess",
     "NewObject",
@@ -64,4 +62,4 @@ public interface JavaMMTreeConstants
     "Operator",
   };
 }
-/* JavaCC - OriginalChecksum=04a8cd4d82f362c3bc11e626a41343c7 (do not edit this line) */
+/* JavaCC - OriginalChecksum=9f7f5140e07c894afe141c0bd2a04bae (do not edit this line) */
