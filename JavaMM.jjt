@@ -178,7 +178,7 @@ void Statement() #void : {} {
     |
     While()
     |
-    ExpressionSubset() <SEMICOLON>
+    ExpressionTerminals() <SEMICOLON>
     |
     Assignment()
 }
@@ -193,10 +193,6 @@ void Else() : {}{
     <ELSE>
 
         Statement()
-}
-
-void Assignment() : {Token t1;}{
-    t1 = <IDENTIFIER> {jjtThis.name = t1.image;} ( IdentifierStmt() )? <SEMICOLON>
 }
 
 void While() : {Token t1;}{
@@ -214,27 +210,169 @@ void While() : {Token t1;}{
         Statement()
 }
 
-
-void IdentifierStmt() #void : {} {
-    ExpressionLeftSubset()  
-    | 
-    PositionAccess() (AssignmentLeft() 
-    | 
-    ExpressionLeft())  
-    | 
-    AssignmentLeft() 
+void Assignment() : {Token t1;}{
+    t1 = <IDENTIFIER> {jjtThis.name = t1.image;} ( IdentifierStmt() )? <SEMICOLON>
 }
 
-void PositionAccess() : {Token t1;} {
-    <OPENBRACKET> Expression() <CLOSEBRACKET> 
+void IdentifierStmt() #void : {} {
+    PositionAccess() (AssignmentLeft() 
+    | 
+    ExpressionRight())  
+    | 
+    AssignmentLeft() 
 }
 
 void AssignmentLeft(): {} {
     <EQUAL> Expression()
 }
 
+void Expression()  #void: {} 
+{
+        ExpressionTerminals() |   ExpressionIdent()
+}
 
 
+/*
+
+
+
+
+    NEW
+
+
+
+
+
+*/
+
+
+
+void ExpressionTerminals() #void: {}
+{
+    SecondLevelPrecende() 
+    (
+        <LOGICAND> SecondLevelPrecende() #And(2)
+    )?
+    ExpressionRight()
+}
+
+void SecondLevelPrecende() #void : {}
+{
+    ThirdLevelPrecende() 
+    ( 
+        <SMALLERSIGN> ThirdLevelPrecende() #LessThan(2)
+    )?
+}
+
+void ThirdLevelPrecende() #void :  {}
+{
+    FourthLevelPrecende()
+    (
+        <PLUSSIGN> FourthLevelPrecende() #Add(2) 
+        |
+        <MINUSIGN> FourthLevelPrecende() #Sub(2) 
+    )?
+}
+
+void FourthLevelPrecende() #void : {Token t1;}
+{
+    PrecendeTerminals()
+    (
+        <TIMESSIGN>  PrecendeTerminals() #Mult(2)
+        |
+        <DIVIDESIGN> PrecendeTerminals() #Div(2) 
+    )?
+}
+
+void PrecendeTerminals() : {}{
+    (
+        t1 = <INTEGER>
+        |   
+        t1 = <TRUE> 
+        |
+        t1 = <FALSE>
+        |   
+        t1 = <THIS>
+        |   
+        t1 = <NEW> NewObject() 
+        |   
+        t1 = <LOGICNOT> Expression()
+        |   
+        <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
+    ) #Term
+}
+
+
+
+/*
+
+
+
+
+
+
+    OLD
+
+
+void ExpressionTerminals() : {Token t1;}
+{
+    (
+    t1 = <INTEGER> ExpressionRight()
+    |   
+    t1 = <TRUE> ExpressionRight()
+    |
+    t1 = <FALSE> ExpressionRight()
+    |   
+    t1 = <THIS> ExpressionRight()
+    |   
+    t1 = <NEW> NewObject() ExpressionRight()
+    |   
+    t1 = <LOGICNOT> Expression() ExpressionRight() ){ jjtThis.name = t1.image;}
+    |   
+    <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE> ExpressionRight()
+}
+
+
+*/
+
+void ExpressionIdent() : {Token t1;}{
+        t1 = <IDENTIFIER> {jjtThis.name = t1.image;} ExpressionRight()
+}
+
+void ExpressionRight() #void: {}
+{
+    ExpressionRightSubset()
+    | PositionAccess()  ExpressionRight()
+    | Empty()
+}
+
+void ExpressionRightSubset() #void: {} {
+    Operator() Expression()
+    | <POINT> ( ObjectAttr() | Length() ) ExpressionRight()
+}
+
+
+/*
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/
+
+
+
+void PositionAccess() : {Token t1;} {
+    <OPENBRACKET> Expression() <CLOSEBRACKET> 
+}
 
 void NewObject(): {Token t1;} {
     
@@ -252,50 +390,11 @@ void ObjectAttr(): {Token t1;} {
     <PARENTHESISCLOSE>
 }
 
-
-void Expression()  #void: {} 
-{
-        ExpressionSubset() |   ExpressionIdent()
-}
-
-void ExpressionIdent() : {Token t1;}{
-        t1 = <IDENTIFIER> {jjtThis.name = t1.image;} ExpressionLeft()
-}
-
-void ExpressionSubset() : {Token t1;}
-{
-    (
-    t1 = <INTEGER> ExpressionLeft()
-    |   
-    t1 = <TRUE> ExpressionLeft()
-    |
-    t1 = <FALSE> ExpressionLeft()
-    |   
-    t1 = <THIS> ExpressionLeft()
-    |   
-    t1 = <NEW> NewObject() ExpressionLeft()
-    |   
-    t1 = <LOGICNOT> Expression() ExpressionLeft() ){ jjtThis.name = t1.image;}
-    |   
-    <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE> ExpressionLeft()
-}
-
-
-void ExpressionLeft() #void: {}
-{
-    ExpressionLeftSubset()
-    | PositionAccess()  ExpressionLeft()
-    | Empty()
-}
-
-void ExpressionLeftSubset() #void: {} {
-    Operator() Expression()
-    | <POINT> ( ObjectAttr() | Length() ) ExpressionLeft()
-}
-
 void Length() : {}{
     <LENGTH>
 }
+
+
 
 void Operator(): {Token t1;} {
 
@@ -316,6 +415,8 @@ void Operator(): {Token t1;} {
 
 }
 
+/*
+
 void FirstLevelPrecende(): {}
 {
     SecondLevelPrecende() (  <LOGICAND> SecondLevelPrecende())?
@@ -335,6 +436,8 @@ void FourthLevelPrecende(): {}
 {
     ( (<TIMESSIGN>|<DIVIDESIGN>) Expression() )?
 }
+
+*/
 
 void Empty() #void: {} {
     {}

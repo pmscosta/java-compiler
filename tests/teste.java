@@ -2,6 +2,8 @@ class ClasseTeste extends Pdro {
 
   public static void main(String[] args) {
 
+    3 * 3 + 2;
+
   }
 
   public boolean testStuff() {

@@ -13,20 +13,23 @@ public interface JavaMMTreeConstants
   public int JJTVARDECLARATION = 9;
   public int JJTIF = 10;
   public int JJTELSE = 11;
-  public int JJTASSIGNMENT = 12;
-  public int JJTWHILE = 13;
-  public int JJTPOSITIONACCESS = 14;
-  public int JJTASSIGNMENTLEFT = 15;
-  public int JJTNEWOBJECT = 16;
-  public int JJTOBJECTATTR = 17;
-  public int JJTEXPRESSIONIDENT = 18;
-  public int JJTEXPRESSIONSUBSET = 19;
-  public int JJTLENGTH = 20;
-  public int JJTOPERATOR = 21;
-  public int JJTFIRSTLEVELPRECENDE = 22;
-  public int JJTSECONDLEVELPRECENDE = 23;
-  public int JJTTHIRDLEVELPRECENDE = 24;
-  public int JJTFOURTHLEVELPRECENDE = 25;
+  public int JJTWHILE = 12;
+  public int JJTASSIGNMENT = 13;
+  public int JJTASSIGNMENTLEFT = 14;
+  public int JJTAND = 15;
+  public int JJTLESSTHAN = 16;
+  public int JJTADD = 17;
+  public int JJTSUB = 18;
+  public int JJTMULT = 19;
+  public int JJTDIV = 20;
+  public int JJTPRECENDETERMINALS = 21;
+  public int JJTTERM = 22;
+  public int JJTEXPRESSIONIDENT = 23;
+  public int JJTPOSITIONACCESS = 24;
+  public int JJTNEWOBJECT = 25;
+  public int JJTOBJECTATTR = 26;
+  public int JJTLENGTH = 27;
+  public int JJTOPERATOR = 28;
 
 
   public String[] jjtNodeName = {
@@ -42,20 +45,23 @@ public interface JavaMMTreeConstants
     "VarDeclaration",
     "If",
     "Else",
-    "Assignment",
     "While",
-    "PositionAccess",
+    "Assignment",
     "AssignmentLeft",
+    "And",
+    "LessThan",
+    "Add",
+    "Sub",
+    "Mult",
+    "Div",
+    "PrecendeTerminals",
+    "Term",
+    "ExpressionIdent",
+    "PositionAccess",
     "NewObject",
     "ObjectAttr",
-    "ExpressionIdent",
-    "ExpressionSubset",
     "Length",
     "Operator",
-    "FirstLevelPrecende",
-    "SecondLevelPrecende",
-    "ThirdLevelPrecende",
-    "FourthLevelPrecende",
   };
 }
-/* JavaCC - OriginalChecksum=934f5ff3e86038cb53784fd40f6aad5c (do not edit this line) */
+/* JavaCC - OriginalChecksum=04a8cd4d82f362c3bc11e626a41343c7 (do not edit this line) */
