@@ -25,7 +25,7 @@ class FindMaximum {
     test_arr[0] = 14;
     test_arr[1] = 28;
     test_arr[2] = 0;
-    test_arr[3] = 0 - 5;
+    test_arr[3] = 0 - 5; // No unary minus in Java--
     test_arr[4] = 12;
 
     return 0;
@@ -40,8 +40,6 @@ class FindMaximum {
 
     fm = new FindMaximum();
     fm.build_test_arr();
-
-    3 + 3 * 3 + 4 / 5 * 6 + 1;
 
     ioPlus.printResult(fm.find_maximum(fm.get_array()));
   }

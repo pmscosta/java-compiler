@@ -53,6 +53,20 @@ PARSER_END(JavaMM)
     // símbolos que não devem ser considerados na análise
     SKIP : {" " | "\t" | "\r" | "\n"}
 
+    SKIP :
+    {   
+        < "//" (~["\r", "\n"])* >
+        |              
+        < "/*" > : ML_COMMENT_STATE
+    }
+
+    <ML_COMMENT_STATE> SKIP :   
+    {
+        < "*/" > : DEFAULT
+        |
+        < ~[] >   
+    }
+
            // definição dos tokens (símbolos terminais)
 TOKEN : {
         <  INTEGER:  <DECIMAL_LITERAL> (["l","L"])?
@@ -178,7 +192,7 @@ void Statement() #void : {} {
     |
     While()
     |
-    LOOKAHEAD(3)
+    LOOKAHEAD(2)
     IdentifierAssignment()
     |
     Expression() <SEMICOLON>
@@ -192,11 +206,10 @@ void IdentifierAssignment() #void : {Token t1;}{
      <SEMICOLON>
 }
 
-void Ident() #void : {Token t1;} {
-    t1 = <IDENTIFIER> (PositionAccess())? {jjtThis.name = t1.image;} #Term
-     
+void Ident() #Term : {Token t1;} {
+    t1 = <IDENTIFIER> (PositionAccess())? {jjtThis.name = t1.image;} 
+      
 }
-
 
 void If() : {}{
     <IF>
@@ -238,7 +251,6 @@ void ExpressionPrecedence() #void: {}
         LOOKAHEAD(2)
         <LOGICAND> SecondLevelPrecedence() #And(2)
     )*
-    ExpressionRight()
 }
 
 void SecondLevelPrecedence() #void : {}
@@ -278,31 +290,34 @@ void FourthLevelPrecedence() #void : {Token t1;}
 }
 
 void PrecedenceTerminals() : {Token t1;}{
-        (   
-            t1 = <INTEGER>
+        (
+            (   
+                t1 = <INTEGER>
+                |   
+                t1 = <TRUE> 
+                |
+                t1 = <FALSE>
+                |   
+                t1 = <THIS>
+                |   
+                t1 = <NEW> NewObject() 
+                |   
+                t1 = <LOGICNOT> Expression()
+                |
+                t1 = <IDENTIFIER> 
+            ) {jjtThis.name = t1.image;}
             |   
-            t1 = <TRUE> 
-            |
-            t1 = <FALSE>
-            |   
-            t1 = <THIS>
-            |   
-            t1 = <NEW> NewObject() 
-            |   
-            t1 = <LOGICNOT> Expression()
-            |
-            t1 = <IDENTIFIER> 
-        ) {jjtThis.name = t1.image;}
-        |   
-        <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
+            <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
+        )
+        
+        ExpressionRight()
     
 }
 
-void ExpressionRight() #void: {}
+void ExpressionRight() #void: {Token t1;}
 {
-    Expression()
-    | 
-     <POINT> ( ObjectAttr() | Length() ) #POINT(2) ExpressionRight() 
+
+    t1 = <POINT> ( ObjectAttr() | Length() ) ExpressionRight() 
     | 
     PositionAccess()  ExpressionRight()
     | 

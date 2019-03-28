@@ -23,10 +23,9 @@ public interface JavaMMTreeConstants
   public int JJTMULT = 19;
   public int JJTDIV = 20;
   public int JJTPRECEDENCETERMINALS = 21;
-  public int JJTPOINT = 22;
-  public int JJTNEWOBJECT = 23;
-  public int JJTOBJECTATTR = 24;
-  public int JJTLENGTH = 25;
+  public int JJTNEWOBJECT = 22;
+  public int JJTOBJECTATTR = 23;
+  public int JJTLENGTH = 24;
 
 
   public String[] jjtNodeName = {
@@ -52,10 +51,9 @@ public interface JavaMMTreeConstants
     "Mult",
     "Div",
     "PrecedenceTerminals",
-    "POINT",
     "NewObject",
     "ObjectAttr",
     "Length",
   };
 }
-/* JavaCC - OriginalChecksum=9e41057f7a8f242daaa7ab61b511dba7 (do not edit this line) */
+/* JavaCC - OriginalChecksum=8c38f422def7c28ad986f5f7d23e27f3 (do not edit this line) */

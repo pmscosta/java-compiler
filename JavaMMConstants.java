@@ -9,88 +9,90 @@ public interface JavaMMConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int INTEGER = 5;
+  int INTEGER = 9;
   /** RegularExpression Id. */
-  int DECIMAL_LITERAL = 6;
+  int DECIMAL_LITERAL = 10;
   /** RegularExpression Id. */
-  int HEX_LITERAL = 7;
+  int HEX_LITERAL = 11;
   /** RegularExpression Id. */
-  int OCTAL_LITERAL = 8;
+  int OCTAL_LITERAL = 12;
   /** RegularExpression Id. */
-  int CLASS = 9;
+  int CLASS = 13;
   /** RegularExpression Id. */
-  int EXTENDS = 10;
+  int EXTENDS = 14;
   /** RegularExpression Id. */
-  int TYPEINT = 11;
+  int TYPEINT = 15;
   /** RegularExpression Id. */
-  int TYPESTRING = 12;
+  int TYPESTRING = 16;
   /** RegularExpression Id. */
-  int TYPEBOOLEAN = 13;
+  int TYPEBOOLEAN = 17;
   /** RegularExpression Id. */
-  int PUBLIC = 14;
+  int PUBLIC = 18;
   /** RegularExpression Id. */
-  int STATIC = 15;
+  int STATIC = 19;
   /** RegularExpression Id. */
-  int VOID = 16;
+  int VOID = 20;
   /** RegularExpression Id. */
-  int MAIN = 17;
+  int MAIN = 21;
   /** RegularExpression Id. */
-  int RETURN = 18;
+  int RETURN = 22;
   /** RegularExpression Id. */
-  int IF = 19;
+  int IF = 23;
   /** RegularExpression Id. */
-  int ELSE = 20;
+  int ELSE = 24;
   /** RegularExpression Id. */
-  int WHILE = 21;
+  int WHILE = 25;
   /** RegularExpression Id. */
-  int EQUAL = 22;
+  int EQUAL = 26;
   /** RegularExpression Id. */
-  int TRUE = 23;
+  int TRUE = 27;
   /** RegularExpression Id. */
-  int LENGTH = 24;
+  int LENGTH = 28;
   /** RegularExpression Id. */
-  int FALSE = 25;
+  int FALSE = 29;
   /** RegularExpression Id. */
-  int THIS = 26;
+  int THIS = 30;
   /** RegularExpression Id. */
-  int NEW = 27;
+  int NEW = 31;
   /** RegularExpression Id. */
-  int SMALLERSIGN = 28;
+  int SMALLERSIGN = 32;
   /** RegularExpression Id. */
-  int PLUSSIGN = 29;
+  int PLUSSIGN = 33;
   /** RegularExpression Id. */
-  int MINUSIGN = 30;
+  int MINUSIGN = 34;
   /** RegularExpression Id. */
-  int TIMESSIGN = 31;
+  int TIMESSIGN = 35;
   /** RegularExpression Id. */
-  int DIVIDESIGN = 32;
+  int DIVIDESIGN = 36;
   /** RegularExpression Id. */
-  int LOGICAND = 33;
+  int LOGICAND = 37;
   /** RegularExpression Id. */
-  int LOGICNOT = 34;
+  int LOGICNOT = 38;
   /** RegularExpression Id. */
-  int OPENCURLYBRACKET = 35;
+  int OPENCURLYBRACKET = 39;
   /** RegularExpression Id. */
-  int CLOSECURLYBRACKET = 36;
+  int CLOSECURLYBRACKET = 40;
   /** RegularExpression Id. */
-  int OPENBRACKET = 37;
+  int OPENBRACKET = 41;
   /** RegularExpression Id. */
-  int CLOSEBRACKET = 38;
+  int CLOSEBRACKET = 42;
   /** RegularExpression Id. */
-  int SEMICOLON = 39;
+  int SEMICOLON = 43;
   /** RegularExpression Id. */
-  int PARENTHESISOPEN = 40;
+  int PARENTHESISOPEN = 44;
   /** RegularExpression Id. */
-  int PARENTHESISCLOSE = 41;
+  int PARENTHESISCLOSE = 45;
   /** RegularExpression Id. */
-  int COMMA = 42;
+  int COMMA = 46;
   /** RegularExpression Id. */
-  int POINT = 43;
+  int POINT = 47;
   /** RegularExpression Id. */
-  int IDENTIFIER = 44;
+  int IDENTIFIER = 48;
 
   /** Lexical state. */
   int DEFAULT = 0;
+  /** Lexical state. */
+  int ML_COMMENT_STATE = 1;
 
   /** Literal token values. */
   String[] tokenImage = {
@@ -99,6 +101,10 @@ public interface JavaMMConstants {
     "\"\\t\"",
     "\"\\r\"",
     "\"\\n\"",
+    "<token of kind 5>",
+    "\"/*\"",
+    "\"*/\"",
+    "<token of kind 8>",
     "<INTEGER>",
     "<DECIMAL_LITERAL>",
     "<HEX_LITERAL>",
