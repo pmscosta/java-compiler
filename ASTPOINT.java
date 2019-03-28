@@ -2,12 +2,6 @@
 /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=false,TRACK_TOKENS=true,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 public class ASTPOINT extends SimpleNode {
 
-  public String name;
-
-  public String toString() {
-    return this.name;
-  }
-
   public ASTPOINT(int id) {
     super(id);
   }

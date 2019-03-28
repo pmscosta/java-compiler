@@ -510,19 +510,12 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     default:
       jj_la1[10] = jj_gen;
       if (jj_2_2(2)) {
-        IdentifierAssignment();
+        Expression();
+        jj_consume_token(SEMICOLON);
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case INTEGER:
-        case TRUE:
-        case FALSE:
-        case THIS:
-        case NEW:
-        case LOGICNOT:
-        case PARENTHESISOPEN:
         case IDENTIFIER:
-          Expression();
-          jj_consume_token(SEMICOLON);
+          IdentifierAssignment();
           break;
         default:
           jj_la1[11] = jj_gen;
@@ -1037,17 +1030,42 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case POINT:
       t1 = jj_consume_token(POINT);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case IDENTIFIER:
-        ObjectAttr();
-        break;
-      case LENGTH:
-        Length();
-        break;
-      default:
-        jj_la1[18] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+                   ASTPOINT jjtn001 = new ASTPOINT(JJTPOINT);
+                   boolean jjtc001 = true;
+                   jjtree.openNodeScope(jjtn001);
+                   jjtn001.jjtSetFirstToken(getToken(1));
+      try {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case IDENTIFIER:
+          ObjectAttr();
+          break;
+        case LENGTH:
+          Length();
+          break;
+        default:
+          jj_la1[18] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
+      } catch (Throwable jjte001) {
+                   if (jjtc001) {
+                     jjtree.clearNodeScope(jjtn001);
+                     jjtc001 = false;
+                   } else {
+                     jjtree.popNode();
+                   }
+                   if (jjte001 instanceof RuntimeException) {
+                     {if (true) throw (RuntimeException)jjte001;}
+                   }
+                   if (jjte001 instanceof ParseException) {
+                     {if (true) throw (ParseException)jjte001;}
+                   }
+                   {if (true) throw (Error)jjte001;}
+      } finally {
+                   if (jjtc001) {
+                     jjtree.closeNodeScope(jjtn001,  1);
+                     jjtn001.jjtSetLastToken(getToken(0));
+                   }
       }
       ExpressionRight();
       break;
@@ -1240,8 +1258,9 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     finally { jj_save(5, xla); }
   }
 
-  static private boolean jj_3R_28() {
-    if (jj_3R_32()) return true;
+  static private boolean jj_3R_12() {
+    if (jj_3R_20()) return true;
+    if (jj_scan_token(IDENTIFIER)) return true;
     return false;
   }
 
@@ -1255,54 +1274,44 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     return false;
   }
 
-  static private boolean jj_3R_27() {
+  static private boolean jj_3R_26() {
     if (jj_scan_token(IDENTIFIER)) return true;
     return false;
   }
 
-  static private boolean jj_3R_30() {
-    if (jj_scan_token(PARENTHESISOPEN)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_26() {
+  static private boolean jj_3R_25() {
     if (jj_scan_token(TYPEINT)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_31()) jj_scanpos = xsp;
-    return false;
-  }
-
-  static private boolean jj_3R_34() {
-    if (jj_scan_token(LOGICNOT)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_33() {
-    if (jj_scan_token(NEW)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_25() {
-    if (jj_scan_token(TYPEBOOLEAN)) return true;
+    if (jj_3R_29()) jj_scanpos = xsp;
     return false;
   }
 
   static private boolean jj_3R_20() {
     Token xsp;
     xsp = jj_scanpos;
+    if (jj_3R_24()) {
+    jj_scanpos = xsp;
     if (jj_3R_25()) {
     jj_scanpos = xsp;
-    if (jj_3R_26()) {
-    jj_scanpos = xsp;
-    if (jj_3R_27()) return true;
+    if (jj_3R_26()) return true;
     }
     }
     return false;
   }
 
+  static private boolean jj_3R_24() {
+    if (jj_scan_token(TYPEBOOLEAN)) return true;
+    return false;
+  }
+
   static private boolean jj_3R_15() {
-    if (jj_3R_23()) return true;
+    if (jj_3R_22()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3_5()) { jj_scanpos = xsp; break; }
+    }
     return false;
   }
 
@@ -1317,25 +1326,118 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     return false;
   }
 
-  static private boolean jj_3R_31() {
-    if (jj_scan_token(OPENBRACKET)) return true;
+  static private boolean jj_3R_38() {
     return false;
   }
 
   static private boolean jj_3R_14() {
     if (jj_3R_15()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3_4()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  static private boolean jj_3_3() {
+    if (jj_scan_token(LOGICAND)) return true;
+    if (jj_3R_14()) return true;
     return false;
   }
 
   static private boolean jj_3R_21() {
+    if (jj_3R_14()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3_3()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_13() {
+    if (jj_3R_21()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_40() {
     if (jj_scan_token(IDENTIFIER)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_39() {
+    if (jj_scan_token(TYPEINT)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_36() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_28()) jj_scanpos = xsp;
+    if (jj_3R_39()) {
+    jj_scanpos = xsp;
+    if (jj_3R_40()) return true;
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_37() {
+    if (jj_scan_token(OPENBRACKET)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_35() {
+    if (jj_3R_38()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_34() {
+    if (jj_3R_37()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_32() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_33()) {
+    jj_scanpos = xsp;
+    if (jj_3R_34()) {
+    jj_scanpos = xsp;
+    if (jj_3R_35()) return true;
+    }
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_33() {
+    if (jj_scan_token(POINT)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_28() {
+    if (jj_scan_token(PARENTHESISOPEN)) return true;
+    if (jj_3R_13()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_31() {
+    if (jj_scan_token(LOGICNOT)) return true;
+    if (jj_3R_13()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_30() {
+    if (jj_scan_token(NEW)) return true;
+    if (jj_3R_36()) return true;
     return false;
   }
 
   static private boolean jj_3R_29() {
+    if (jj_scan_token(OPENBRACKET)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_27() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_scan_token(9)) {
@@ -1346,9 +1448,9 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     jj_scanpos = xsp;
     if (jj_scan_token(30)) {
     jj_scanpos = xsp;
-    if (jj_3R_33()) {
+    if (jj_3R_30()) {
     jj_scanpos = xsp;
-    if (jj_3R_34()) {
+    if (jj_3R_31()) {
     jj_scanpos = xsp;
     if (jj_scan_token(48)) return true;
     }
@@ -1360,50 +1462,32 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     return false;
   }
 
-  static private boolean jj_3R_22() {
-    if (jj_scan_token(EQUAL)) return true;
-    return false;
-  }
-
-  static private boolean jj_3_3() {
-    if (jj_scan_token(LOGICAND)) return true;
-    if (jj_3R_14()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_24() {
+  static private boolean jj_3R_23() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_29()) {
+    if (jj_3R_27()) {
     jj_scanpos = xsp;
-    if (jj_3R_30()) return true;
+    if (jj_3R_28()) return true;
     }
-    return false;
-  }
-
-  static private boolean jj_3R_13() {
-    if (jj_3R_21()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_22()) jj_scanpos = xsp;
-    if (jj_scan_token(SEMICOLON)) return true;
+    if (jj_3R_32()) return true;
     return false;
   }
 
   static private boolean jj_3R_19() {
     if (jj_scan_token(DIVIDESIGN)) return true;
-    if (jj_3R_24()) return true;
+    if (jj_3R_23()) return true;
     return false;
   }
 
   static private boolean jj_3R_18() {
     if (jj_scan_token(TIMESSIGN)) return true;
-    if (jj_3R_24()) return true;
+    if (jj_3R_23()) return true;
     return false;
   }
 
   static private boolean jj_3_2() {
     if (jj_3R_13()) return true;
+    if (jj_scan_token(SEMICOLON)) return true;
     return false;
   }
 
@@ -1417,31 +1501,25 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     return false;
   }
 
-  static private boolean jj_3R_32() {
-    if (jj_scan_token(OPENBRACKET)) return true;
-    return false;
-  }
-
   static private boolean jj_3R_17() {
     if (jj_scan_token(MINUSIGN)) return true;
-    if (jj_3R_23()) return true;
+    if (jj_3R_22()) return true;
     return false;
   }
 
-  static private boolean jj_3R_23() {
-    if (jj_3R_24()) return true;
+  static private boolean jj_3R_22() {
+    if (jj_3R_23()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3_6()) { jj_scanpos = xsp; break; }
+    }
     return false;
   }
 
   static private boolean jj_3R_16() {
     if (jj_scan_token(PLUSSIGN)) return true;
-    if (jj_3R_23()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_12() {
-    if (jj_3R_20()) return true;
-    if (jj_scan_token(IDENTIFIER)) return true;
+    if (jj_3R_22()) return true;
     return false;
   }
 
@@ -1465,10 +1543,10 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x4000,0x28000,0x40000,0xa8000,0x0,0x28000,0xea800200,0x0,0x28000,0xea800200,0x2800000,0xe8000200,0x4000000,0x0,0x0,0x0,0xe8000200,0xe8000200,0x10000000,0x0,0x8000,0x0,0xe8000200,};
+      jj_la1_0 = new int[] {0x4000,0x28000,0x40000,0xa8000,0x0,0x28000,0xea800200,0x0,0x28000,0xea800200,0x2800000,0x0,0x4000000,0x0,0x0,0x0,0xe8000200,0xe8000200,0x10000000,0x0,0x8000,0x0,0xe8000200,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x0,0x10000,0x0,0x10000,0x4000,0x10000,0x110c0,0x200,0x10000,0x110c0,0x80,0x11040,0x0,0x200,0x6,0x18,0x10040,0x11040,0x10000,0x8200,0x10000,0x4000,0x11040,};
+      jj_la1_1 = new int[] {0x0,0x10000,0x0,0x10000,0x4000,0x10000,0x110c0,0x200,0x10000,0x110c0,0x80,0x10000,0x0,0x200,0x6,0x18,0x10040,0x11040,0x10000,0x8200,0x10000,0x4000,0x11040,};
    }
   static final private JJCalls[] jj_2_rtns = new JJCalls[6];
   static private boolean jj_rescan = false;

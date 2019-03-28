@@ -193,9 +193,9 @@ void Statement() #void : {} {
     While()
     |
     LOOKAHEAD(2)
-    IdentifierAssignment()
-    |
     Expression() <SEMICOLON>
+    |
+    IdentifierAssignment()
 }
 
 void IdentifierAssignment() #void : {Token t1;}{
@@ -243,6 +243,7 @@ void Expression()  #void: {}
 {
         ExpressionPrecedence()
 }
+
 
 void ExpressionPrecedence() #void: {}
 {
@@ -317,7 +318,7 @@ void PrecedenceTerminals() : {Token t1;}{
 void ExpressionRight() #void: {Token t1;}
 {
 
-    t1 = <POINT> ( ObjectAttr() | Length() ) ExpressionRight() 
+    t1 = <POINT> ( ObjectAttr() | Length() ) #POINT(1) ExpressionRight() 
     | 
     PositionAccess()  ExpressionRight()
     | 
