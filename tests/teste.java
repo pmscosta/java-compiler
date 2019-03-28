@@ -1,9 +1,48 @@
-class ClasseTeste extends Pdro {
+class FindMaximum {
+  int[] test_arr;
 
-  public static void main(String[] args) {
+  public int find_maximum(int[] arr) {
+    int i;
+    int maximum;
+    int value;
 
-    3 * 3 + 2 + 4 / 5 * 3;
+    i = 1;
+    maximum = arr[0];
+    while (i < arr.length) {
+      value = arr[i];
+      if (maximum < value) {
+        maximum = value;
+      } else {
+      }
+      i = i + 1;
+    }
 
+    return maximum;
   }
 
+  public int build_test_arr() {
+    test_arr = new int[5];
+    test_arr[0] = 14;
+    test_arr[1] = 28;
+    test_arr[2] = 0;
+    test_arr[3] = 0 - 5;
+    test_arr[4] = 12;
+
+    return 0;
+  }
+
+  public int[] get_array() {
+    return test_arr;
+  }
+
+  public static void main(String[] args) {
+    FindMaximum fm;
+
+    fm = new FindMaximum();
+    fm.build_test_arr();
+
+    3 + 3 * 3 + 4 / 5 * 6 + 1;
+
+    ioPlus.printResult(fm.find_maximum(fm.get_array()));
+  }
 }

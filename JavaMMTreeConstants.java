@@ -11,24 +11,22 @@ public interface JavaMMTreeConstants
   public int JJTFUNCTIONBODY = 7;
   public int JJTTYPE = 8;
   public int JJTVARDECLARATION = 9;
-  public int JJTIF = 10;
-  public int JJTELSE = 11;
-  public int JJTWHILE = 12;
-  public int JJTASSIGNMENT = 13;
-  public int JJTASSIGNMENTLEFT = 14;
+  public int JJTEQUAL = 10;
+  public int JJTTERM = 11;
+  public int JJTIF = 12;
+  public int JJTELSE = 13;
+  public int JJTWHILE = 14;
   public int JJTAND = 15;
   public int JJTLESSTHAN = 16;
   public int JJTADD = 17;
   public int JJTSUB = 18;
   public int JJTMULT = 19;
   public int JJTDIV = 20;
-  public int JJTPRECENDETERMINALS = 21;
-  public int JJTEXPRESSIONIDENT = 22;
-  public int JJTPOSITIONACCESS = 23;
-  public int JJTNEWOBJECT = 24;
-  public int JJTOBJECTATTR = 25;
-  public int JJTLENGTH = 26;
-  public int JJTOPERATOR = 27;
+  public int JJTPRECEDENCETERMINALS = 21;
+  public int JJTPOINT = 22;
+  public int JJTNEWOBJECT = 23;
+  public int JJTOBJECTATTR = 24;
+  public int JJTLENGTH = 25;
 
 
   public String[] jjtNodeName = {
@@ -42,24 +40,22 @@ public interface JavaMMTreeConstants
     "FunctionBody",
     "Type",
     "VarDeclaration",
+    "EQUAL",
+    "Term",
     "If",
     "Else",
     "While",
-    "Assignment",
-    "AssignmentLeft",
     "And",
     "LessThan",
     "Add",
     "Sub",
     "Mult",
     "Div",
-    "PrecendeTerminals",
-    "ExpressionIdent",
-    "PositionAccess",
+    "PrecedenceTerminals",
+    "POINT",
     "NewObject",
     "ObjectAttr",
     "Length",
-    "Operator",
   };
 }
-/* JavaCC - OriginalChecksum=9f7f5140e07c894afe141c0bd2a04bae (do not edit this line) */
+/* JavaCC - OriginalChecksum=9e41057f7a8f242daaa7ab61b511dba7 (do not edit this line) */

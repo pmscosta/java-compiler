@@ -2,7 +2,11 @@
 /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=false,TRACK_TOKENS=true,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 public class ASTType extends SimpleNode {
 
-  public String type;
+  public String name;
+
+  public String toString() {
+    return this.name;
+  }
 
   public ASTType(int id) {
     super(id);
@@ -10,10 +14,6 @@ public class ASTType extends SimpleNode {
 
   public ASTType(JavaMM p, int id) {
     super(p, id);
-  }
-
-  public String toString() {
-    return this.type;
   }
 
 }

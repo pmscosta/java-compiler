@@ -4,16 +4,16 @@ public class ASTArgument extends SimpleNode {
 
   public String name;
 
+  public String toString() {
+    return this.name;
+  }
+
   public ASTArgument(int id) {
     super(id);
   }
 
   public ASTArgument(JavaMM p, int id) {
     super(p, id);
-  }
-
-  public String toString() {
-    return this.name;
   }
 
 }

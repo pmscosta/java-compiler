@@ -4,16 +4,16 @@ public class ASTMethodDeclaration extends SimpleNode {
 
   public String name;
 
+  public String toString() {
+    return this.name;
+  }
+
   public ASTMethodDeclaration(int id) {
     super(id);
   }
 
   public ASTMethodDeclaration(JavaMM p, int id) {
     super(p, id);
-  }
-
-  public String toString() {
-    return super.toString() + "\t" + this.name;
   }
 
 }

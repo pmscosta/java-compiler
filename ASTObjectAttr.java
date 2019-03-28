@@ -4,16 +4,16 @@ public class ASTObjectAttr extends SimpleNode {
 
   public String name;
 
+  public String toString() {
+    return this.name;
+  }
+
   public ASTObjectAttr(int id) {
     super(id);
   }
 
   public ASTObjectAttr(JavaMM p, int id) {
     super(p, id);
-  }
-
-  public String toString() {
-    return "." + this.name;
   }
 
 }

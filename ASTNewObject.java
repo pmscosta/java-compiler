@@ -4,16 +4,16 @@ public class ASTNewObject extends SimpleNode {
 
   public String name;
 
+  public String toString() {
+    return this.name;
+  }
+
   public ASTNewObject(int id) {
     super(id);
   }
 
   public ASTNewObject(JavaMM p, int id) {
     super(p, id);
-  }
-
-  public String toString() {
-    return this.name;
   }
 
 }
