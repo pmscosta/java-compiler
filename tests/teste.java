@@ -6,6 +6,22 @@ class FindMaximum {
     int maximum;
     int value;
 
+    arr[1+2+3] < arr[2 + 4] + arr[2+3];
+
+    true < false;
+
+    this;
+
+    if (!a) {
+      a = new Ident();
+    } else {
+      if (a < 4) {
+        a = 4 + 5 * 3;
+      } else {
+
+      }
+    }
+
     maximum = arr[0];
     while (i < arr.length) {
       value = arr[i];

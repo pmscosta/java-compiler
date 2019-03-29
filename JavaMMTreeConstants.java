@@ -11,27 +11,26 @@ public interface JavaMMTreeConstants
   public int JJTFUNCTIONBODY = 7;
   public int JJTTYPE = 8;
   public int JJTVARDECLARATION = 9;
-  public int JJTEXPRESSIONNOIDENT = 10;
-  public int JJTINTEGER = 11;
-  public int JJTBOOL = 12;
-  public int JJTTHIS_ = 13;
-  public int JJTNOT = 14;
-  public int JJTEQUAL = 15;
-  public int JJTTERM = 16;
-  public int JJTIF = 17;
-  public int JJTELSE = 18;
-  public int JJTWHILE = 19;
-  public int JJTAND = 20;
-  public int JJTLESSTHAN = 21;
-  public int JJTADD = 22;
-  public int JJTSUB = 23;
-  public int JJTMULT = 24;
-  public int JJTDIV = 25;
-  public int JJTPOINT = 26;
-  public int JJTPOSITION = 27;
-  public int JJTNEW = 28;
-  public int JJTOBJECTATTR = 29;
-  public int JJTLENGTH = 30;
+  public int JJTINTEGER = 10;
+  public int JJTBOOL = 11;
+  public int JJTTHIS_ = 12;
+  public int JJTNOT = 13;
+  public int JJTEQUAL = 14;
+  public int JJTAND = 15;
+  public int JJTLESSTHAN = 16;
+  public int JJTADD = 17;
+  public int JJTSUB = 18;
+  public int JJTMULT = 19;
+  public int JJTDIV = 20;
+  public int JJTTERM = 21;
+  public int JJTIF = 22;
+  public int JJTELSE = 23;
+  public int JJTWHILE = 24;
+  public int JJTPOINT = 25;
+  public int JJTPOSITION = 26;
+  public int JJTNEW = 27;
+  public int JJTOBJECTATTR = 28;
+  public int JJTLENGTH = 29;
 
 
   public String[] jjtNodeName = {
@@ -45,22 +44,21 @@ public interface JavaMMTreeConstants
     "FunctionBody",
     "Type",
     "VarDeclaration",
-    "ExpressionNoIdent",
     "integer",
     "bool",
     "this_",
     "not",
     "EQUAL",
-    "Term",
-    "If",
-    "Else",
-    "While",
     "And",
     "LessThan",
     "Add",
     "Sub",
     "Mult",
     "Div",
+    "Term",
+    "If",
+    "Else",
+    "While",
     "POINT",
     "POSITION",
     "NEW",
@@ -68,4 +66,4 @@ public interface JavaMMTreeConstants
     "Length",
   };
 }
-/* JavaCC - OriginalChecksum=2cd0939a8a0a9e77f3cd50552d707641 (do not edit this line) */
+/* JavaCC - OriginalChecksum=7f42c1ee974f1c5d109ded616e07f6ce (do not edit this line) */

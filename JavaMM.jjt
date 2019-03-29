@@ -197,7 +197,7 @@ void Statement() #void : {} {
     ExpressionNoIdent() <SEMICOLON>
 }
 
-void ExpressionNoIdent() : {Token t1;} {
+void ExpressionNoIdent() #void : {Token t1;} {
     (
         ( t1 = <INTEGER> {jjtThis.name = t1.image;} #integer)
         |   
@@ -213,13 +213,53 @@ void ExpressionNoIdent() : {Token t1;} {
         |   
         <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
     )   
-    ExpressionRight()
+    ExpressionRight() Operator1()
 }
 
 void IdentifierAssignment() #void  : {}{
     Ident() 
-     ( (<EQUAL> Expression() #EQUAL(2) <SEMICOLON> | (ExpressionRight() <SEMICOLON>)))
+     ( (<EQUAL> Expression() #EQUAL(2) <SEMICOLON> | (ExpressionRight() Operator1() <SEMICOLON>)))
 }
+
+void Operator1() #void : {}{
+    Operator2()
+    (
+    LOOKAHEAD(2)
+    <LOGICAND> Operator2() #And(2)
+    )*
+}
+void Operator2() #void  : {}{
+    Operator3()
+    (
+    LOOKAHEAD(2)
+    <SMALLERSIGN> Operator3() #LessThan(2)
+    )*
+}
+
+void Operator3() #void : {}{
+    Operator4()
+    (
+        LOOKAHEAD(2)
+        (
+            <PLUSSIGN> Operator4() #Add(2) 
+            |
+            <MINUSIGN> Operator4() #Sub(2) 
+        )
+    )*
+}
+
+void Operator4() #void : {}{
+    [PrecedenceTerminals()]
+    (   
+        LOOKAHEAD(2)
+        (
+            <TIMESSIGN>  PrecedenceTerminals() #Mult(2)
+            |
+            <DIVIDESIGN> PrecedenceTerminals() #Div(2) 
+        )
+    )*
+}
+
 
 void Ident() #void : {} {
      Identifier() ( PositionAccess() | Empty()) 
