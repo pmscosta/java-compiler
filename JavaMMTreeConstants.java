@@ -17,18 +17,18 @@ public interface JavaMMTreeConstants
   public int JJTTHIS_ = 13;
   public int JJTNOT = 14;
   public int JJTEQUAL = 15;
-  public int JJTPOSITION = 16;
-  public int JJTTERM = 17;
-  public int JJTIF = 18;
-  public int JJTELSE = 19;
-  public int JJTWHILE = 20;
-  public int JJTAND = 21;
-  public int JJTLESSTHAN = 22;
-  public int JJTADD = 23;
-  public int JJTSUB = 24;
-  public int JJTMULT = 25;
-  public int JJTDIV = 26;
-  public int JJTPOINT = 27;
+  public int JJTTERM = 16;
+  public int JJTIF = 17;
+  public int JJTELSE = 18;
+  public int JJTWHILE = 19;
+  public int JJTAND = 20;
+  public int JJTLESSTHAN = 21;
+  public int JJTADD = 22;
+  public int JJTSUB = 23;
+  public int JJTMULT = 24;
+  public int JJTDIV = 25;
+  public int JJTPOINT = 26;
+  public int JJTPOSITION = 27;
   public int JJTNEW = 28;
   public int JJTOBJECTATTR = 29;
   public int JJTLENGTH = 30;
@@ -51,7 +51,6 @@ public interface JavaMMTreeConstants
     "this_",
     "not",
     "EQUAL",
-    "POSITION",
     "Term",
     "If",
     "Else",
@@ -63,9 +62,10 @@ public interface JavaMMTreeConstants
     "Mult",
     "Div",
     "POINT",
+    "POSITION",
     "NEW",
     "ObjectAttr",
     "Length",
   };
 }
-/* JavaCC - OriginalChecksum=c6bd03c4d75237ce4f51490f268adb0e (do not edit this line) */
+/* JavaCC - OriginalChecksum=2cd0939a8a0a9e77f3cd50552d707641 (do not edit this line) */

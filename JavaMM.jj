@@ -650,36 +650,7 @@ void IdentifierAssignment()        : {}{
 }
 
 void Ident()       : {} {
-     Identifier() (  <OPENBRACKET>/*@bgen(jjtree) #POSITION( 2) */
-                                    {
-                                      ASTPOSITION jjtn001 = new ASTPOSITION(JJTPOSITION);
-                                      boolean jjtc001 = true;
-                                      jjtree.openNodeScope(jjtn001);
-                                      jjtn001.jjtSetFirstToken(getToken(1));
-                                    }
-                                    try {
-/*@egen*/  Expression()/*@bgen(jjtree)*/
-                                    } catch (Throwable jjte001) {
-                                      if (jjtc001) {
-                                        jjtree.clearNodeScope(jjtn001);
-                                        jjtc001 = false;
-                                      } else {
-                                        jjtree.popNode();
-                                      }
-                                      if (jjte001 instanceof RuntimeException) {
-                                        throw (RuntimeException)jjte001;
-                                      }
-                                      if (jjte001 instanceof ParseException) {
-                                        throw (ParseException)jjte001;
-                                      }
-                                      throw (Error)jjte001;
-                                    } finally {
-                                      if (jjtc001) {
-                                        jjtree.closeNodeScope(jjtn001,  2);
-                                        jjtn001.jjtSetLastToken(getToken(0));
-                                      }
-                                    }
-/*@egen*/              <CLOSEBRACKET> | Empty()) 
+     Identifier() ( PositionAccess() | Empty()) 
 }
 
 void Identifier()       : {/*@bgen(jjtree) Term */
@@ -1175,7 +1146,7 @@ void PrecedenceTerminals()       : {Token t1;}
 void ExpressionRight()      : {Token t1;}
 {
 
-    t1 = <POINT>/*@bgen(jjtree) #POINT( 1) */
+    t1 = <POINT>/*@bgen(jjtree) #POINT( 2) */
                  {
                    ASTPOINT jjtn001 = new ASTPOINT(JJTPOINT);
                    boolean jjtc001 = true;
@@ -1200,7 +1171,7 @@ void ExpressionRight()      : {Token t1;}
                    throw (Error)jjte001;
                  } finally {
                    if (jjtc001) {
-                     jjtree.closeNodeScope(jjtn001,  1);
+                     jjtree.closeNodeScope(jjtn001,  2);
                      jjtn001.jjtSetLastToken(getToken(0));
                    }
                  }
@@ -1213,9 +1184,9 @@ void ExpressionRight()      : {Token t1;}
 
 
 void PositionAccess()       : {} {
-    <OPENBRACKET>/*@bgen(jjtree) #POINT( 2) */
+    <OPENBRACKET>/*@bgen(jjtree) #POSITION( 2) */
                    {
-                     ASTPOINT jjtn001 = new ASTPOINT(JJTPOINT);
+                     ASTPOSITION jjtn001 = new ASTPOSITION(JJTPOSITION);
                      boolean jjtc001 = true;
                      jjtree.openNodeScope(jjtn001);
                      jjtn001.jjtSetFirstToken(getToken(1));
@@ -1242,7 +1213,7 @@ void PositionAccess()       : {} {
                        jjtn001.jjtSetLastToken(getToken(0));
                      }
                    }
-/*@egen*/           <CLOSEBRACKET> 
+/*@egen*/              <CLOSEBRACKET>  
 }
 
 void NewObject()       : {Token t1;} {

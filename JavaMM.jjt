@@ -222,7 +222,7 @@ void IdentifierAssignment() #void  : {}{
 }
 
 void Ident() #void : {} {
-     Identifier() (  <OPENBRACKET>  Expression() #POSITION(2) <CLOSEBRACKET> | Empty()) 
+     Identifier() ( PositionAccess() | Empty()) 
 }
 
 void Identifier() #Term : {Token t1;}{
@@ -335,7 +335,7 @@ void PrecedenceTerminals() #void : {Token t1;}
 void ExpressionRight() #void: {Token t1;}
 {
 
-    t1 = <POINT> ( ObjectAttr() | Length() ) #POINT(1)  ExpressionRight() 
+    t1 = <POINT> ( ObjectAttr() | Length() ) #POINT(2)  ExpressionRight() 
     | 
     PositionAccess()  ExpressionRight()
     | 
@@ -344,7 +344,7 @@ void ExpressionRight() #void: {Token t1;}
 
 
 void PositionAccess() #void : {} {
-    <OPENBRACKET>  Expression() #POINT(2) <CLOSEBRACKET> 
+    <OPENBRACKET>  Expression() #POSITION(2) <CLOSEBRACKET>  
 }
 
 void NewObject() #void : {Token t1;} {

@@ -712,34 +712,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
     Identifier();
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case OPENBRACKET:
-      jj_consume_token(OPENBRACKET);
-                                      ASTPOSITION jjtn001 = new ASTPOSITION(JJTPOSITION);
-                                      boolean jjtc001 = true;
-                                      jjtree.openNodeScope(jjtn001);
-                                      jjtn001.jjtSetFirstToken(getToken(1));
-      try {
-        Expression();
-      } catch (Throwable jjte001) {
-                                      if (jjtc001) {
-                                        jjtree.clearNodeScope(jjtn001);
-                                        jjtc001 = false;
-                                      } else {
-                                        jjtree.popNode();
-                                      }
-                                      if (jjte001 instanceof RuntimeException) {
-                                        {if (true) throw (RuntimeException)jjte001;}
-                                      }
-                                      if (jjte001 instanceof ParseException) {
-                                        {if (true) throw (ParseException)jjte001;}
-                                      }
-                                      {if (true) throw (Error)jjte001;}
-      } finally {
-                                      if (jjtc001) {
-                                        jjtree.closeNodeScope(jjtn001,  2);
-                                        jjtn001.jjtSetLastToken(getToken(0));
-                                      }
-      }
-      jj_consume_token(CLOSEBRACKET);
+      PositionAccess();
       break;
     default:
       jj_la1[13] = jj_gen;
@@ -1256,7 +1229,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
                    {if (true) throw (Error)jjte001;}
       } finally {
                    if (jjtc001) {
-                     jjtree.closeNodeScope(jjtn001,  1);
+                     jjtree.closeNodeScope(jjtn001,  2);
                      jjtn001.jjtSetLastToken(getToken(0));
                    }
       }
@@ -1274,7 +1247,7 @@ class JavaMM/*@bgen(jjtree)*/implements JavaMMTreeConstants, JavaMMConstants {/*
 
   static final public void PositionAccess() throws ParseException {
     jj_consume_token(OPENBRACKET);
-                     ASTPOINT jjtn001 = new ASTPOINT(JJTPOINT);
+                     ASTPOSITION jjtn001 = new ASTPOSITION(JJTPOSITION);
                      boolean jjtc001 = true;
                      jjtree.openNodeScope(jjtn001);
                      jjtn001.jjtSetFirstToken(getToken(1));
