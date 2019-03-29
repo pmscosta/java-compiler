@@ -192,24 +192,43 @@ void Statement() #void : {} {
     |
     While()
     |
-    LOOKAHEAD(2)
-    Expression() <SEMICOLON>
-    |
     IdentifierAssignment()
+    |
+    ExpressionNoIdent() <SEMICOLON>
 }
 
-void IdentifierAssignment() #void : {Token t1;}{
-    Ident()
+void ExpressionNoIdent() : {Token t1;} {
     (
-        <EQUAL>  Expression() #EQUAL(2)
-    ) ?
-     <SEMICOLON>
+        ( t1 = <INTEGER> {jjtThis.name = t1.image;} #integer)
+        |   
+        ( t1 = <TRUE> {jjtThis.name = t1.image;} #bool )
+        |
+        ( t1 = <FALSE> {jjtThis.name = t1.image;} #bool)
+        |   
+        ( t1 = <THIS> {jjtThis.name = t1.image;} #this_ )
+        |   
+        ( NewObject() )
+        |   
+        ( t1 = <LOGICNOT> Expression() {jjtThis.name = t1.image;} #not)
+        |   
+        <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
+    )   
+    ExpressionRight()
 }
 
-void Ident() #Term : {Token t1;} {
-    t1 = <IDENTIFIER> (PositionAccess())? {jjtThis.name = t1.image;} 
-      
+void IdentifierAssignment() #void  : {}{
+    Ident() 
+     ( (<EQUAL> Expression() #EQUAL(2) <SEMICOLON> | (ExpressionRight() <SEMICOLON>)))
 }
+
+void Ident() #void : {} {
+     Identifier() (  <OPENBRACKET>  Expression() #POSITION(2) <CLOSEBRACKET> | Empty()) 
+}
+
+void Identifier() #Term : {Token t1;}{
+    t1 = <IDENTIFIER> {jjtThis.name = t1.image;}
+}
+
 
 void If() : {}{
     <IF>
@@ -290,35 +309,33 @@ void FourthLevelPrecedence() #void : {Token t1;}
     )*
 }
 
-void PrecedenceTerminals() : {Token t1;}{
-        (
-            (   
-                t1 = <INTEGER>
-                |   
-                t1 = <TRUE> 
-                |
-                t1 = <FALSE>
-                |   
-                t1 = <THIS>
-                |   
-                t1 = <NEW> NewObject() 
-                |   
-                t1 = <LOGICNOT> Expression()
-                |
-                t1 = <IDENTIFIER> 
-            ) {jjtThis.name = t1.image;}
-            |   
-            <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
-        )
-        
-        ExpressionRight()
+void PrecedenceTerminals() #void : {Token t1;}
+{
+    (
+        ( t1 = <INTEGER> {jjtThis.name = t1.image;} #integer)
+        |   
+        ( t1 = <TRUE> {jjtThis.name = t1.image;} #bool )
+        |
+        ( t1 = <FALSE> {jjtThis.name = t1.image;} #bool)
+        |   
+        ( t1 = <THIS> {jjtThis.name = t1.image;} #this_ )
+        |   
+        ( NewObject() )
+        |   
+        ( t1 = <LOGICNOT> Expression() {jjtThis.name = t1.image;} #not)
+        |
+        Identifier()
+        |   
+        <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
+    )   
+    ExpressionRight()
     
 }
 
 void ExpressionRight() #void: {Token t1;}
 {
 
-    t1 = <POINT> ( ObjectAttr() | Length() ) #POINT(1) ExpressionRight() 
+    t1 = <POINT> ( ObjectAttr() | Length() ) #POINT(1)  ExpressionRight() 
     | 
     PositionAccess()  ExpressionRight()
     | 
@@ -327,16 +344,16 @@ void ExpressionRight() #void: {Token t1;}
 
 
 void PositionAccess() #void : {} {
-    <OPENBRACKET> Expression() <CLOSEBRACKET> 
+    <OPENBRACKET>  Expression() #POINT(2) <CLOSEBRACKET> 
 }
 
-void NewObject(): {Token t1;} {
-    
-    (
-    t1 = <TYPEINT> <OPENBRACKET> Expression() <CLOSEBRACKET>
-    | 
-    t1 = <IDENTIFIER> <PARENTHESISOPEN> <PARENTHESISCLOSE> 
-    ){jjtThis.name = t1.image;}
+void NewObject() #void : {Token t1;} {
+    <NEW>
+    (    
+        ((t1 = <TYPEINT> {jjtThis.name = t1.image;} #integer) <OPENBRACKET> Expression() <CLOSEBRACKET> #NEW(2))
+        | 
+        (Identifier() <PARENTHESISOPEN> <PARENTHESISCLOSE> #NEW(1))
+    )
 }
 
 void ObjectAttr(): {Token t1;} {

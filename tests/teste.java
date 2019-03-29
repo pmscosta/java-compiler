@@ -37,6 +37,8 @@ class FindMaximum {
   public static void main(String[] args) {
     FindMaximum fm;
 
+    a = new int[3];
+
     fm = new FindMaximum();
     fm.build_test_arr();
 
