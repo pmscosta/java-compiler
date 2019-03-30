@@ -217,46 +217,41 @@ void ExpressionNoIdent() #void : {Token t1;} {
 }
 
 void IdentifierAssignment() #void  : {}{
-    Ident() 
-     ( (<EQUAL> Expression() #Equal(2) <SEMICOLON> | (ExpressionRight() Operator1() <SEMICOLON>)))
+    Ident()
+    (
+        (<EQUAL> Expression() #Equal(2) <SEMICOLON>)
+        | 
+        (ExpressionRight() Operator1() <SEMICOLON>)
+    )
 }
 
 void Operator1() #void : {}{
     Operator2()
     (
-    LOOKAHEAD(2)
-    <LOGICAND> Operator2() #And(2)
+    <LOGICAND> SecondLevelPrecedence() #And(2)
     )*
 }
 void Operator2() #void  : {}{
     Operator3()
     (
-    LOOKAHEAD(2)
-    <SMALLERSIGN> Operator3() #LessThan(2)
+    <SMALLERSIGN> ThirdLevelPrecedence() #LessThan(2)
     )*
 }
 
 void Operator3() #void : {}{
     Operator4()
     (
-        LOOKAHEAD(2)
-        (
-            <PLUSSIGN> Operator4() #Add(2) 
-            |
-            <MINUSIGN> Operator4() #Sub(2) 
-        )
+        <PLUSSIGN> FourthLevelPrecedence() #Add(2)
+        |
+        <MINUSIGN> FourthLevelPrecedence() #Sub(2)
     )*
 }
 
 void Operator4() #void : {}{
-    [PrecedenceTerminals()]
-    (   
-        LOOKAHEAD(2)
-        (
-            <TIMESSIGN>  PrecedenceTerminals() #Mult(2)
-            |
-            <DIVIDESIGN> PrecedenceTerminals() #Div(2) 
-        )
+    (
+        <TIMESSIGN>  PrecedenceTerminals() #Mult(2)
+        |
+        <DIVIDESIGN> PrecedenceTerminals() #Div(2)
     )*
 }
 
