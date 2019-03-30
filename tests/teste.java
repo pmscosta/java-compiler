@@ -6,7 +6,12 @@ class FindMaximum {
     int maximum;
     int value;
 
-    arr[1+2+3] < arr[2 + 4] + arr[2+3];
+    (arr[1+2+3] < arr[2 + 4] + arr[2+3]);
+    a < true;
+
+    a + b * c - e < f / g;
+    1 - b * true < false * this / g;
+
 
     true < false;
 
@@ -32,7 +37,7 @@ class FindMaximum {
       i = i + 1;
     }
 
-    return maximum;
+    return maximum < true;
   }
 
   public int build_test_arr() {
