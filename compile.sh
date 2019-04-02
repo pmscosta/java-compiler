@@ -1,7 +1,5 @@
 #!/bin/sh
 
-jjtree src/jmm.jjt
-
-javacc src/jmm.jj
-
-javac src/*.java
+cd src
+javac jmm.java
+cd ..

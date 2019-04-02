@@ -1,0 +1,393 @@
+options
+{
+    LOOKAHEAD=1;
+    MULTI=true;
+    TRACK_TOKENS = true;
+    JJTREE_OUTPUT_DIRECTORY = "src/jjt";
+    OUTPUT_DIRECTORY = "src/jjt";
+}
+
+PARSER_BEGIN(jmm_parser)
+
+package jjt;
+
+// código Java que invoca o parser
+
+public class jmm_parser {
+
+
+  public static void error_skipto(int kind){
+      ParseException e = generateParseException();
+      System.out.println(e.toString());
+      Token t;
+
+      do{
+
+          t = getToken(1);
+
+          if(t.kind == kind)
+            return;
+
+          t = getNextToken();
+      } while(t.kind != kind);
+  }
+
+}
+
+PARSER_END(jmm_parser)
+
+    // símbolos que não devem ser considerados na análise
+    SKIP : {" " | "\t" | "\r" | "\n"}
+
+    SKIP :
+    {   
+        < "//" (~["\r", "\n"])* >
+        |              
+        < "/*" > : ML_COMMENT_STATE
+    }
+
+    <ML_COMMENT_STATE> SKIP :   
+    {
+        < "*/" > : DEFAULT
+        |
+        < ~[] >   
+    }
+
+           // definição dos tokens (símbolos terminais)
+TOKEN : {
+        <  INTEGER:  <DECIMAL_LITERAL> (["l","L"])?
+                                | <HEX_LITERAL> (["l","L"])?
+                                | <OCTAL_LITERAL> (["l","L"])? >
+                                | < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* >
+                                | < #HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ >
+                                | < #OCTAL_LITERAL: "0" (["0"-"7"])* >
+        |   < CLASS: "class" >
+        |   < EXTENDS: "extends" >
+        |   < TYPEINT: "int" >
+        |   < TYPESTRING: "String" >
+        |   < TYPEBOOLEAN: "boolean" >
+        |   < PUBLIC: "public" >
+        |   < STATIC: "static" >
+        |   < VOID: "void" >
+        |   < MAIN: "main" >
+        |   < RETURN: "return">
+        |   < IF: "if" >
+        |   < ELSE: "else" >
+        |   < WHILE: "while" >
+        |   < EQUAL: "=" >
+        |   < TRUE: "true">
+        |   < LENGTH: "length">
+        |   < FALSE: "false">
+        |   < THIS: "this">
+        |   < NEW: "new">
+        |   < SMALLERSIGN: "<" >
+        |   < PLUSSIGN: "+">
+        |   < MINUSIGN: "-">
+        |   < TIMESSIGN: "*">
+        |   < DIVIDESIGN: "/">
+        |   < LOGICAND: "&&" >
+        |   < LOGICNOT: "!">
+        |   < OPENCURLYBRACKET: "{" >
+        |   < CLOSECURLYBRACKET: "}" >
+        |   < OPENBRACKET: "[" >
+        |   < CLOSEBRACKET: "]" >
+        |   < SEMICOLON: ";" >
+        |   < PARENTHESISOPEN: "(" >
+        |   < PARENTHESISCLOSE: ")" >
+        |   < COMMA: "," >
+        |   < POINT: "." >
+        |   < IDENTIFIER: ["a"-"z", "A"-"Z", "_", "$"](["a"-"z", "A"-"Z", "_", "$", "0"-"9"])* >
+        }
+
+
+SimpleNode ClassDeclaration() : {Token t1;} {
+    < CLASS > t1=< IDENTIFIER >{jjtThis.name=t1.image;} [< EXTENDS > < IDENTIFIER >] <OPENCURLYBRACKET>
+    
+    ( VarDeclaration() )*
+    ( PublicFunction() )*
+    
+    <CLOSECURLYBRACKET>
+
+    {return jjtThis;}
+}
+
+void PublicFunction() #void : {}{
+
+    <PUBLIC> (Type() MethodDeclaration() | <STATIC> MainDeclaration())
+
+}
+
+void MethodDeclaration() : {Token t1;} {
+    t1 = <IDENTIFIER> {jjtThis.name = t1.image;} 
+        <PARENTHESISOPEN>
+            Arguments()
+        <PARENTHESISCLOSE>
+    <OPENCURLYBRACKET>
+        FunctionBody()
+        Return()
+    <CLOSECURLYBRACKET>
+}
+
+void MainDeclaration() : {} {
+    <VOID> <MAIN> 
+        <PARENTHESISOPEN>
+            <TYPESTRING> <OPENBRACKET> <CLOSEBRACKET> <IDENTIFIER>
+        <PARENTHESISCLOSE>
+    <OPENCURLYBRACKET>
+        FunctionBody()
+    <CLOSECURLYBRACKET>
+}
+
+void Return() : {}{
+        <RETURN> Expression() <SEMICOLON>
+}
+
+void Arguments() : {}{
+    [ Argument() ( <COMMA> Argument() )*]
+}
+
+void Argument() : {Token t1;}{
+    Type() t1 = <IDENTIFIER> {jjtThis.name = t1.image;}
+}
+
+
+void FunctionBody() : {} {
+    ( LOOKAHEAD(2) VarDeclaration())*
+    (Statement())*
+}
+
+void Type() : {Token t1;} {
+    <TYPEBOOLEAN> { jjtThis.name = "Boolean"; } 
+    | <TYPEINT> { jjtThis.name = "int"; } [<OPENBRACKET> <CLOSEBRACKET> { jjtThis.name = "int[]"; } ] 
+    | t1 = <IDENTIFIER> { jjtThis.name = t1.image; } 
+}
+
+void VarDeclaration() : {Token t1;} {
+        Type() t1=<IDENTIFIER>{jjtThis.name = t1.image;} <SEMICOLON>
+
+}
+
+void Statement() #void : {} {
+ 
+    <OPENCURLYBRACKET>
+        ( Statement() )*
+    <CLOSECURLYBRACKET>
+    |   
+    If()
+    Else()
+    |
+    While()
+    |
+    IdentifierAssignment()
+    |
+    ExpressionNoIdent() <SEMICOLON>
+}
+
+void ExpressionNoIdent() #void : {Token t1;} {
+    (
+        ( t1 = <INTEGER> {jjtThis.name = t1.image;} #Integer)
+        |   
+        ( t1 = <TRUE> {jjtThis.name = t1.image;} #Bool )
+        |
+        ( t1 = <FALSE> {jjtThis.name = t1.image;} #Bool)
+        |   
+        ( t1 = <THIS> {jjtThis.name = t1.image;} #This_ )
+        |   
+        ( NewObject() )
+        |   
+        ( t1 = <LOGICNOT> Expression() {jjtThis.name = t1.image;} #not)
+        |   
+        <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
+    )   
+    ExpressionRight() Operator1()
+}
+
+void IdentifierAssignment() #void  : {}{
+    Ident()
+    (
+        (<EQUAL> Expression() #Equal(2) <SEMICOLON>)
+        | 
+        (ExpressionRight() Operator1() <SEMICOLON>)
+    )
+}
+
+void Operator1() #void : {}{
+    Operator2()
+    (
+    <LOGICAND> SecondLevelPrecedence() #And(2)
+    )*
+}
+void Operator2() #void  : {}{
+    Operator3()
+    (
+    <SMALLERSIGN> ThirdLevelPrecedence() #LessThan(2)
+    )*
+}
+
+void Operator3() #void : {}{
+    Operator4()
+    (
+        <PLUSSIGN> FourthLevelPrecedence() #Add(2)
+        |
+        <MINUSIGN> FourthLevelPrecedence() #Sub(2)
+    )*
+}
+
+void Operator4() #void : {}{
+    (
+        <TIMESSIGN>  PrecedenceTerminals() #Mult(2)
+        |
+        <DIVIDESIGN> PrecedenceTerminals() #Div(2)
+    )*
+}
+
+
+void Ident() #void : {} {
+     Identifier() ( PositionAccess() | Empty()) 
+}
+
+void Identifier() #Term : {Token t1;}{
+    t1 = <IDENTIFIER> {jjtThis.name = t1.image;}
+}
+
+
+void If() : {}{
+    <IF>
+        <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
+            Statement()
+}
+
+void Else() : {}{
+    <ELSE>
+
+        Statement()
+}
+
+void While() : {Token t1;}{
+
+    <WHILE>
+        <PARENTHESISOPEN>
+        { try{
+            Expression();
+        } catch(ParseException e){
+            error_skipto(PARENTHESISCLOSE);
+        }
+        }
+        <PARENTHESISCLOSE>
+        
+        Statement()
+}
+
+
+void Expression()  #void: {} 
+{
+        ExpressionPrecedence()
+}
+
+
+void ExpressionPrecedence() #void: {}
+{
+    SecondLevelPrecedence() 
+    (
+        LOOKAHEAD(2)
+        <LOGICAND> SecondLevelPrecedence() #And(2)
+    )*
+}
+
+void SecondLevelPrecedence() #void : {}
+{
+    ThirdLevelPrecedence() 
+    ( 
+        LOOKAHEAD(2)
+        <SMALLERSIGN> ThirdLevelPrecedence() #LessThan(2)
+    )*
+}
+
+void ThirdLevelPrecedence() #void :  {}
+{
+    FourthLevelPrecedence()
+    (
+        LOOKAHEAD(2)
+        (
+            <PLUSSIGN> FourthLevelPrecedence() #Add(2) 
+            |
+            <MINUSIGN> FourthLevelPrecedence() #Sub(2) 
+        )
+    )*
+}
+
+void FourthLevelPrecedence() #void : {Token t1;}
+{
+    PrecedenceTerminals()
+    (   
+
+        LOOKAHEAD(2)
+        (
+            <TIMESSIGN>  PrecedenceTerminals() #Mult(2)
+            |
+            <DIVIDESIGN> PrecedenceTerminals() #Div(2) 
+        )
+    )*
+}
+
+void PrecedenceTerminals() #void : {Token t1;}
+{
+    (
+        ( t1 = <INTEGER> {jjtThis.name = t1.image;} #Integer)
+        |   
+        ( t1 = <TRUE> {jjtThis.name = t1.image;} #Bool )
+        |
+        ( t1 = <FALSE> {jjtThis.name = t1.image;} #Bool)
+        |   
+        ( t1 = <THIS> {jjtThis.name = t1.image;} #This_ )
+        |   
+        ( NewObject() )
+        |   
+        ( t1 = <LOGICNOT> Expression() {jjtThis.name = t1.image;} #Not)
+        |
+        Identifier()
+        |   
+        <PARENTHESISOPEN> Expression() <PARENTHESISCLOSE>
+    )   
+    ExpressionRight()
+    
+}
+
+void ExpressionRight() #void: {Token t1;}
+{
+
+    t1 = <POINT> ( ObjectAttr() | Length() ) #Point(2) ExpressionRight() 
+    | 
+    PositionAccess()  ExpressionRight()
+    | 
+    Empty()
+}
+
+
+void PositionAccess() #void : {} {
+    <OPENBRACKET>  Expression() #Position(2) <CLOSEBRACKET>  
+}
+
+void NewObject() #void : {Token t1;} {
+    <NEW>
+    (    
+        ((t1 = <TYPEINT> {jjtThis.name = t1.image;} #Integer) <OPENBRACKET> Expression() <CLOSEBRACKET> #New(2))
+        | 
+        (Identifier() <PARENTHESISOPEN> <PARENTHESISCLOSE> #New(1))
+    )
+}
+
+void ObjectAttr(): {Token t1;} {
+    t1 = <IDENTIFIER> {jjtThis.name = t1.image;}
+    <PARENTHESISOPEN>
+        ( Expression() ( <COMMA> Expression() ) * )?
+    <PARENTHESISCLOSE>
+}
+
+void Length() : {}{
+    <LENGTH>
+}
+
+void Empty() #void: {} {
+    {}
+}
